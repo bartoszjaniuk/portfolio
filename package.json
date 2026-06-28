@@ -16,7 +16,8 @@
     "format:check": "prettier --check .",
     "check": "eslint . && prettier --check .",
     "typecheck": "tsc --noEmit",
-    "validate": "bun run check && bun run typecheck && bun run build"
+    "validate": "bun run check && bun run typecheck && bun run build",
+    "prepare": "husky"
   },
   "dependencies": {
     "next": "16.2.9",
@@ -31,6 +32,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "eslint-config-prettier": "10.1.8",
+    "husky": "9.1.7",
+    "lint-staged": "17.0.8",
     "prettier": "3.9.1",
     "prettier-plugin-tailwindcss": "0.8.0",
     "tailwindcss": "^4",
@@ -43,5 +46,11 @@
   "trustedDependencies": [
     "sharp",
     "unrs-resolver"
-  ]
+  ],
+  "lint-staged": {
+    "*.{ts,tsx,mjs,js,jsx,css,md,json}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
 }

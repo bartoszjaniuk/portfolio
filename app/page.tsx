@@ -5,6 +5,7 @@ import {
 import { CursorGlow } from "@/components/features/CursorGlow";
 import Header from "@/components/layout/Header";
 import { Introduction } from "@/features/Homepage/Introduction";
+import { HeroSection } from "@/features/Homepage/HeroSection";
 
 export default function Home() {
   const baseUrl =
@@ -26,11 +27,12 @@ export default function Home() {
           __html: JSON.stringify(personStructuredData),
         }}
       />
-      <main className="scanlines relative min-h-screen overflow-hidden">
+      <main className="scanlines relative min-h-screen">
         <CursorGlow />
         <div className="relative z-10">
           <Header />
           <Introduction />
+          <HeroSection />
           {/* <HeroSection />
 					<ProjectsGrid />
 					<LabNotes />

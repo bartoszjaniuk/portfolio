@@ -4,7 +4,10 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { LogoMark } from "./LogoMark";
 import { ThemeToggle } from "./ThemeToggle";
+import { BrowserStatus } from "@/features/Homepage/components/BrowserStatus";
+import { motion, useScroll, useTransform } from "motion/react";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -26,6 +29,31 @@ const socialLinks = [
     icon: LinkedinLogoIcon,
   },
 ];
+
+export const LogoSvg = () => {
+  const { scrollYProgress } = useScroll();
+
+  const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  return (
+    <div className="relative inline-block select-none">
+      {/* White version */}
+      <h1 className="text-foreground font-mono text-xl font-black tracking-tight">
+        bartosh.dev
+      </h1>
+
+      {/* Green reveal */}
+      <motion.div
+        className="absolute inset-0 overflow-hidden"
+        style={{ width }}
+      >
+        <h1 className="text-primary font-mono text-xl font-black tracking-tight whitespace-nowrap">
+          bartosh.dev
+        </h1>
+      </motion.div>
+    </div>
+  );
+};
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -62,12 +90,8 @@ const Header = () => {
             {/* <div className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-primary/50 bg-primary/10 font-mono text-sm text-primary transition-all duration-400 group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-primary/25">
 							<span className="glitch">{"⚡"}</span>
 						</div> */}
-            <span className="font-mono text-sm tracking-tight">
-              BARTOSH
-              <span className="from-primary/50 to-accent bg-linear-to-l bg-clip-text font-semibold text-transparent">
-                .DEV
-              </span>
-            </span>
+            <LogoMark />
+            <LogoSvg />
           </Link>
 
           {/* Desktop Navigation */}
@@ -134,13 +158,7 @@ const Header = () => {
               ))}
             </div>
 
-            {/* <div className="hidden items-center gap-2.5 font-mono text-xs text-muted-foreground sm:flex px-3 py-1.5 rounded-full bg-secondary/50 border border-border/50">
-							<span className="relative flex h-2 w-2">
-								<span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-								<span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-							</span>
-							<span>status: building</span>
-						</div> */}
+            <BrowserStatus />
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -215,13 +233,13 @@ const Header = () => {
               </div>
             </div>
 
-            {/* <div className="mt-3 flex items-center gap-2.5 px-4 py-3 font-mono text-xs text-muted-foreground bg-secondary/30 rounded-lg mx-4 mb-2">
-							<span className="relative flex h-2 w-2">
-								<span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-								<span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-							</span>
-							<span>status: building</span>
-						</div> */}
+            <div className="text-muted-foreground bg-secondary/30 mx-4 mt-3 mb-2 flex items-center gap-2.5 rounded-lg px-4 py-3 font-mono text-xs">
+              <span className="relative flex h-2 w-2">
+                <span className="bg-primary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75" />
+                <span className="bg-primary relative inline-flex h-2 w-2 rounded-full" />
+              </span>
+              <span>status: building</span>
+            </div>
           </div>
         </div>
       </div>

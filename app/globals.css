@@ -85,6 +85,13 @@
   /* Custom animation tokens */
   --glow-color: oklch(0.65 0.22 290 / 0.15);
   --glow-color-strong: oklch(0.65 0.22 290 / 0.25);
+
+  /* Shader palette — ChromaFlow (interactive purple) */
+  --shader-primary: #6d28d9;
+
+  /* Shader palette — Swirl (subtle ambient base) */
+  --shader-swirl-a: #ffffff;
+  --shader-swirl-b: #ede9fe;
 }
 
 .dark {
@@ -122,6 +129,13 @@
 
   --glow-color: oklch(0.7 0.2 295 / 0.12);
   --glow-color-strong: oklch(0.7 0.2 295 / 0.22);
+
+  /* Shader palette — ChromaFlow (interactive purple) */
+  --shader-primary: #a78bfa;
+
+  /* Shader palette — Swirl (subtle ambient base) */
+  --shader-swirl-a: #050508;
+  --shader-swirl-b: #1a1235;
 }
 
 @layer base {

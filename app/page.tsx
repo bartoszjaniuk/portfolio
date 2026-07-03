@@ -3,6 +3,7 @@ import {
   generateWebsiteStructuredData,
 } from "@/lib/structured-data";
 import { CursorGlow } from "@/components/features/CursorGlow";
+import { ShaderBackground } from "@/components/features/ShaderBackground";
 import Header from "@/components/layout/Header";
 import { Introduction } from "@/features/Homepage/Introduction";
 import { HeroSection } from "@/features/Homepage/HeroSection";
@@ -28,6 +29,7 @@ export default function Home() {
         }}
       />
       <main className="scanlines relative min-h-screen">
+        <ShaderBackground />
         <CursorGlow />
         <div className="relative z-10">
           <Header />

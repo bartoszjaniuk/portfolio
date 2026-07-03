@@ -55,7 +55,7 @@ const HorizontalScrollCarousel = () => {
   const x = useTransform(scrollYProgress, [0, 1], ["1%", "-95%"]);
 
   return (
-    <section ref={targetRef} className="relative h-[300vh] bg-neutral-900">
+    <section ref={targetRef} className="relative h-[300vh] bg-transparent">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         <motion.div style={{ x }} className="flex gap-4">
           {cards.map((card) => {
@@ -92,15 +92,15 @@ const Card = ({ card }: { card: CardType }) => {
 
 export const HeroSection = () => {
   return (
-    <div className="bg-neutral-800">
+    <div className="bg-transparent">
       <div className="flex h-48 items-center justify-center">
-        <span className="font-semibold text-neutral-500 uppercase">
+        <span className="text-muted-foreground font-semibold uppercase">
           Scroll down
         </span>
       </div>
       <HorizontalScrollCarousel />
       <div className="flex h-48 items-center justify-center">
-        <span className="font-semibold text-neutral-500 uppercase">
+        <span className="text-muted-foreground font-semibold uppercase">
           Scroll up
         </span>
       </div>

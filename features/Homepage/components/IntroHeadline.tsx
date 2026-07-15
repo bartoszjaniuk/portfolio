@@ -14,11 +14,12 @@ export const IntroHeadline = () => {
 
   return (
     <div className="animate-fade-in-up space-y-3">
-      <p className="text-primary font-mono text-xs tracking-[0.25em] uppercase sm:tracking-[0.35em]">
+      <p className="text-primary text-xs font-semibold tracking-widest uppercase sm:tracking-[0.35em]">
         {introCopy.tagline}
       </p>
-      <h1 className="text-4xl font-bold tracking-tight text-balance sm:text-4xl lg:text-5xl xl:text-6xl">
+      <h1 className="text-4xl tracking-tight text-balance uppercase sm:text-4xl lg:text-5xl xl:text-7xl">
         {introCopy.headline}
+
         <br />
         <TypewriterText
           text={displayText}

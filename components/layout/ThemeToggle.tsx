@@ -57,7 +57,7 @@ export function ThemeToggle() {
       aria-label={`Switch to ${nextTheme.label} theme`}
     >
       <CurrentIcon className="size-4" />
-      <span className="bg-card text-muted-foreground absolute -bottom-6 left-1/2 -translate-x-1/2 rounded px-2 py-0.5 font-mono text-[10px] whitespace-nowrap opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+      <span className="bg-card text-muted-foreground absolute -bottom-6 left-1/2 -translate-x-1/2 rounded px-2 py-0.5 text-[10px] whitespace-nowrap opacity-0 transition-opacity duration-200 group-hover:opacity-100">
         {resolvedTheme ?? currentTheme}
       </span>
     </button>

@@ -3,18 +3,33 @@
 import { useShaderColors } from "@/hooks/useShaderColors";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useTheme } from "next-themes";
-import { useEffect, useRef, useState } from "react";
-import { ChromaFlow, Shader, Swirl } from "shaders/react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { ChromaFlow, Shader, Swirl, Blob } from "shaders/react";
+
+const subscribeToMount = (onStoreChange: () => void) => {
+  queueMicrotask(onStoreChange);
+  return () => {};
+};
+
+const getMountedSnapshot = () => true;
+const getMountedServerSnapshot = () => false;
 
 export const ShaderBackground = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const { resolvedTheme } = useTheme();
   const colors = useShaderColors();
   const shaderContainerRef = useRef<HTMLDivElement>(null);
+  const isMounted = useSyncExternalStore(
+    subscribeToMount,
+    getMountedSnapshot,
+    getMountedServerSnapshot,
+  );
   const [isLoaded, setIsLoaded] = useState(false);
   const isDark = resolvedTheme === "dark";
 
   useEffect(() => {
+    if (!isMounted) return;
+
     const checkShaderReady = () => {
       if (shaderContainerRef.current) {
         const canvas = shaderContainerRef.current.querySelector("canvas");
@@ -42,9 +57,9 @@ export const ShaderBackground = () => {
       clearInterval(intervalId);
       clearTimeout(fallbackTimer);
     };
-  }, []);
+  }, [isMounted]);
 
-  if (prefersReducedMotion) {
+  if (!isMounted || prefersReducedMotion) {
     return null;
   }
 
@@ -64,13 +79,24 @@ export const ShaderBackground = () => {
           speed={0.4}
           detail={0.4}
           blend={28}
-          opacity={isDark ? 0.45 : 0.35}
           coarseX={40}
           coarseY={40}
           mediumX={40}
           mediumY={40}
           fineX={40}
           fineY={40}
+          colorSpace={"linear"} // "linear" | "oklch" | "oklab" | "hsl" | "hsv" | "lch"
+        />
+        <Blob
+          colorA={colors.primary}
+          colorB={colors.primary}
+          size={0.4}
+          center={{ x: 0.75, y: 0.5 }} // prawa strona, pionowo na środku
+
+          blend={28}
+          opacity={0.8}
+          radius={1.2}
+          maskType="alpha"
         />
         <ChromaFlow
           baseColor={colors.primary}

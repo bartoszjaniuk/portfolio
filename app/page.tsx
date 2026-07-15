@@ -2,11 +2,11 @@ import {
   generatePersonStructuredData,
   generateWebsiteStructuredData,
 } from "@/lib/structured-data";
-import { CursorGlow } from "@/components/features/CursorGlow";
 import { ShaderBackground } from "@/components/features/ShaderBackground";
 import Header from "@/components/layout/Header";
 import { Introduction } from "@/features/Homepage/Introduction";
-import { HeroSection } from "@/features/Homepage/HeroSection";
+import { TechStackSection } from "@/features/Homepage/TechStackSection";
+import { TechToolsSection } from "@/features/Homepage/TechToolsSection";
 
 export default function Home() {
   const baseUrl =
@@ -30,16 +30,15 @@ export default function Home() {
       />
       <main className="scanlines relative min-h-screen">
         <ShaderBackground />
-        <CursorGlow />
         <div className="relative z-10">
           <Header />
           <Introduction />
-          <HeroSection />
-          {/* <HeroSection />
-					<ProjectsGrid />
-					<LabNotes />
-					<Workbench />
-					<Footer /> */}
+          <TechStackSection />
+          <TechToolsSection />
+          {/* <ProjectsGrid /> */}
+          {/* <LabNotes /> */}
+          {/* <Workbench /> */}
+          {/* <Footer />  */}
         </div>
       </main>
     </>

@@ -12,7 +12,7 @@ export type ShaderColors = {
 const FALLBACK_LIGHT: ShaderColors = {
   primary: "#6d28d9",
   swirlA: "#ffffff",
-  swirlB: "#ede9fe",
+  swirlB: "#fefefe",
 };
 
 const FALLBACK_DARK: ShaderColors = {

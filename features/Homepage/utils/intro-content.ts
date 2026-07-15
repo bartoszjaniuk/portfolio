@@ -1,27 +1,30 @@
 export const roles = [
-  "building interfaces",
-  "exploring systems",
-  "breaking barriers",
-  "forging ideas",
-  "crafting code",
+  "modern web applications",
+  "high-performance PWAs",
+  "cross-platform mobile apps",
+  "robust frontend architectures",
+  "scalable full-stack solutions",
 ] as const;
 
 export type IntroRole = (typeof roles)[number];
 
+// "Idea forged into product"
+
 export const introCopy = {
-  tagline: "Bartosz Janiuk — Idea forged into product",
-  headline: "Nowoczesne rozwiązania",
+  tagline: "Bartosz Janiuk — Software Engineer",
+  headline: "Engineering Digital",
   description: {
     before:
-      "Welcome to my digital workshop — a space for experiments, prototypes, and open-source artifacts. Currently building at",
-    highlight: "...",
+      "Przekuwam pomysły w działające produkty cyfrowe. Projektuję i wdrażam frontend, aplikacje mobilne oraz integracje backendowe",
+    // highlight: "Next.js, React Native",
     after:
-      "Here, ideas are forged, tested, and refined. Not a portfolio. A laboratory.",
+      "Currently, I’m focused on building accessible, human-centered products at",
   },
+  link: { href: "https://tsh.io/", label: "The Software House" },
 } as const;
 
 export const introLinks = {
-  projects: { href: "#projects", label: "explore artifacts" },
+  projects: { href: "#projects", label: "Rozpocznijmy wspólny projekt" },
   introduction: { href: "/introduction", label: "introduction" },
 } as const;
 

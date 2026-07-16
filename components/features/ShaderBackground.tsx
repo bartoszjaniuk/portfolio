@@ -14,7 +14,13 @@ const subscribeToMount = (onStoreChange: () => void) => {
 const getMountedSnapshot = () => true;
 const getMountedServerSnapshot = () => false;
 
-export const ShaderBackground = () => {
+type ShaderBackgroundProps = {
+  variant?: "fixed" | "contained";
+};
+
+export const ShaderBackground = ({
+  variant = "fixed",
+}: ShaderBackgroundProps) => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const { resolvedTheme } = useTheme();
   const colors = useShaderColors();
@@ -26,6 +32,8 @@ export const ShaderBackground = () => {
   );
   const [isLoaded, setIsLoaded] = useState(false);
   const isDark = resolvedTheme === "dark";
+  const positionClass =
+    variant === "contained" ? "absolute inset-0" : "fixed inset-0";
 
   useEffect(() => {
     if (!isMounted) return;
@@ -68,7 +76,7 @@ export const ShaderBackground = () => {
   return (
     <div
       ref={shaderContainerRef}
-      className={`pointer-events-none fixed inset-0 z-0 transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+      className={`pointer-events-none z-0 transition-opacity duration-700 ${positionClass} ${isLoaded ? "opacity-100" : "opacity-0"}`}
       style={{ contain: "strict" }}
       aria-hidden
     >

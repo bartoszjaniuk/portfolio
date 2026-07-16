@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LogoMark } from "./LogoMark";
+import { Logo } from "./Logo";
 import { ThemeToggle } from "./ThemeToggle";
 import { BrowserStatus } from "@/features/Homepage/components/BrowserStatus";
 import { motion, useScroll, useTransform } from "motion/react";
@@ -38,7 +38,7 @@ export const LogoSvg = () => {
   return (
     <div className="relative inline-block select-none">
       {/* White version */}
-      <h1 className="text-foreground font-heading text-xl tracking-tight">
+      <h1 className="text-foreground font-heading text-xl leading-none tracking-tight">
         bjaniuk.dev
       </h1>
 
@@ -47,7 +47,7 @@ export const LogoSvg = () => {
         className="absolute inset-0 overflow-hidden"
         style={{ width }}
       >
-        <h1 className="text-primary font-heading text-xl tracking-tight whitespace-nowrap">
+        <h1 className="text-primary font-heading text-xl leading-none tracking-tight whitespace-nowrap">
           bjaniuk.dev
         </h1>
       </motion.div>
@@ -87,11 +87,11 @@ const Header = () => {
       <div className="px-4 sm:px-6">
         <div className="mx-auto max-w-7xl py-4">
           <nav className="flex items-center justify-between">
-            <Link href="/" className="group flex items-center gap-3">
+            <Link href="/" className="group flex items-center gap-2.5">
               {/* <div className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-primary/50 bg-primary/10 font-mono text-sm text-primary transition-all duration-400 group-hover:border-primary group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-105 group-hover:shadow-lg group-hover:shadow-primary/25">
 							<span className="glitch">{"⚡"}</span>
 						</div> */}
-              <LogoMark />
+              <Logo />
               <LogoSvg />
             </Link>
 

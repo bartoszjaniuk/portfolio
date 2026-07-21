@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "motion/react";
+import { motion, useInView, type UseInViewOptions } from "motion/react";
 import Image from "next/image";
 import * as React from "react";
 
@@ -10,7 +10,9 @@ import { cn } from "@/lib/utils";
 const REVEAL_EASE = [0.86, 0, 0.31, 1] as const;
 const REVEAL_DURATION = 1.5;
 const DEFAULT_IN_VIEW_AMOUNT = 0.2;
-const DEFAULT_IN_VIEW_MARGIN = "0px 0px -8% 0px" as const;
+const DEFAULT_IN_VIEW_MARGIN = "0px 0px -8% 0px" satisfies NonNullable<
+  UseInViewOptions["margin"]
+>;
 
 type RevealImageBase = {
   src: string;
@@ -29,9 +31,9 @@ type RevealImageBase = {
    */
   once?: boolean;
   /** Override `useInView` amount (default `0.2`). */
-  amount?: number | "some" | "all";
+  amount?: UseInViewOptions["amount"];
   /** Override `useInView` root margin (default `"0px 0px -8% 0px"`). */
-  margin?: string;
+  margin?: UseInViewOptions["margin"];
 };
 
 type RevealImageFill = RevealImageBase & {

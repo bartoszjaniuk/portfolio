@@ -14,6 +14,7 @@ type ParallaxImageProps = {
   src: string;
   alt: string;
   containerClassName?: string;
+  sizes?: string;
 };
 
 export const OverlayComponent = () => {
@@ -25,6 +26,7 @@ export const ParallaxImage = ({
   alt,
   overlayComponent,
   containerClassName = "h-[300px] w-[300px]",
+  sizes = "(max-width: 768px) 100vw, 700px",
 }: ParallaxImageProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
@@ -45,7 +47,13 @@ export const ParallaxImage = ({
         className="pointer-events-none absolute inset-x-0 top-0 bottom-0 z-0 will-change-transform"
         style={{ y: prefersReducedMotion ? 0 : parallaxY }}
       >
-        <Image src={src} alt={alt} fill objectFit="cover" />
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          className="object-cover"
+        />
       </motion.div>
 
       {overlayComponent ? overlayComponent : null}

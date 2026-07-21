@@ -1,10 +1,9 @@
 "use client";
 
 import Image, { type ImageProps } from "next/image";
-import { type ReactNode, useLayoutEffect, useRef } from "react";
+import { type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
-import { div } from "motion/react-client";
 
 type FixedBackgroundImageProps = {
   src: ImageProps["src"];
@@ -34,16 +33,25 @@ export function FixedBackgroundImage({
   imageClassName,
   overlayClassName,
   contentClassName,
-  sizes = "300px",
+  sizes = "100vw",
   quality = 80,
-  preload = false,
 }: FixedBackgroundImageProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const backgroundRef = useRef<HTMLDivElement>(null);
-
   return (
-    <div id="wrapper" className={cn("w-24", className)}>
-      <Image src={src} alt={alt} fill className="object-cover" />
+    <div className={cn("relative w-24", className)}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        quality={quality}
+        className={cn("object-cover", imageClassName)}
+      />
+      {overlayClassName ? (
+        <div aria-hidden className={cn("absolute inset-0", overlayClassName)} />
+      ) : null}
+      {children ? (
+        <div className={cn("relative z-10", contentClassName)}>{children}</div>
+      ) : null}
     </div>
   );
 }

@@ -11,7 +11,7 @@ export const TypewriterText = ({
   placeholder,
   className,
 }: TypewriterTextProps) => (
-  <span className="relative inline-grid align-top whitespace-nowrap">
+  <span className="relative inline-grid align-top whitespace-normal sm:whitespace-nowrap">
     <span
       aria-hidden
       className={cn("invisible col-start-1 row-start-1 select-none", className)}

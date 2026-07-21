@@ -1,11 +1,12 @@
 import { ShaderBackground } from "@/components/features/ShaderBackground";
+import { Container } from "@/components/layout/Container";
 import { IntroActions } from "./components/IntroActions";
 import { IntroDescription } from "./components/IntroDescription";
 import { IntroHeadline } from "./components/IntroHeadline";
 import { ScrollHint } from "./components/ScrollHint";
 
 export const Introduction = () => (
-  <section className="relative h-screen px-4 pt-28 pb-16 sm:px-6 sm:pt-36 sm:pb-24">
+  <Container className="h-screen pt-20" contained={false}>
     <ShaderBackground variant="contained" />
 
     <div className="relative z-10 mx-auto max-w-7xl">
@@ -23,5 +24,5 @@ export const Introduction = () => (
     </h1> */}
 
     <ScrollHint />
-  </section>
+  </Container>
 );

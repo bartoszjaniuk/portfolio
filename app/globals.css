@@ -34,6 +34,7 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-primary-surface: var(--primary-surface);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -48,93 +49,103 @@
 }
 
 :root {
-  --background: oklch(0.985 0.002 260);
-  --foreground: oklch(0.12 0.015 260);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.12 0.015 260);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.12 0.015 260);
-  --primary: oklch(0.65 0.22 290);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.96 0.008 260);
-  --secondary-foreground: oklch(0.22 0.015 260);
-  --muted: oklch(0.96 0.008 260);
-  --muted-foreground: oklch(0.48 0.01 260);
-  --accent: oklch(0.65 0.22 290);
-  --accent-foreground: oklch(0.98 0 0);
+  /* Constantine Light — sampled from constantine.framer.ai + WCAG-tuned muted */
+  --background: #eeede4;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --primary: #0d3479;
+  --primary-foreground: #eeede4;
+  --primary-surface: #0d3479;
+  --secondary: #e5e3d8;
+  --secondary-foreground: #141414;
+  --muted: #e8e6db;
+  --muted-foreground: #45566e;
+  --accent: #0d3479;
+  --accent-foreground: #eeede4;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.008 260);
-  --input: oklch(0.92 0.008 260);
-  --ring: oklch(0.65 0.22 290);
+  --border: #d4d1c4;
+  --input: #d4d1c4;
+  --ring: #0d3479;
   --chart-1: oklch(0.828 0.111 230.318);
   --chart-2: oklch(0.685 0.169 237.323);
   --chart-3: oklch(0.588 0.158 241.966);
   --chart-4: oklch(0.5 0.134 242.749);
   --chart-5: oklch(0.443 0.11 240.79);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0.002 260);
-  --sidebar-foreground: oklch(0.12 0.015 260);
-  --sidebar-primary: oklch(0.65 0.22 290);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.96 0.008 260);
-  --sidebar-accent-foreground: oklch(0.22 0.015 260);
-  --sidebar-border: oklch(0.92 0.008 260);
-  --sidebar-ring: oklch(0.65 0.22 290);
+  --sidebar: #eeede4;
+  --sidebar-foreground: #000000;
+  --sidebar-primary: #0d3479;
+  --sidebar-primary-foreground: #eeede4;
+  --sidebar-accent: #e5e3d8;
+  --sidebar-accent-foreground: #141414;
+  --sidebar-border: #d4d1c4;
+  --sidebar-ring: #0d3479;
+
+  --gradient-from: #0d3479;
+  --gradient-to: #1a4a9e;
 
   /* Custom animation tokens */
-  --glow-color: oklch(0.65 0.22 290 / 0.15);
-  --glow-color-strong: oklch(0.65 0.22 290 / 0.25);
+  --glow-color: color-mix(in srgb, #0d3479 15%, transparent);
+  --glow-color-strong: color-mix(in srgb, #0d3479 25%, transparent);
 
-  /* Shader palette — ChromaFlow (interactive purple) */
-  --shader-primary: #6d28d9;
+  /* Shader palette — ChromaFlow (interactive navy) */
+  --shader-primary: #0d3479;
 
   /* Shader palette — Swirl (subtle ambient base) */
-  --shader-swirl-a: #ffffff;
-  --shader-swirl-b: #fefefe;
+  --shader-swirl-a: #eeede4;
+  --shader-swirl-b: #f5f4ef;
 }
 
 .dark {
-  --background: #1f1f1f;
-  --foreground: oklch(0.96 0 0);
-  --card: oklch(0.1 0.015 260);
-  --card-foreground: oklch(0.96 0 0);
-  --popover: oklch(0.1 0.015 260);
-  --popover-foreground: oklch(0.96 0 0);
-  --primary: oklch(0.7 0.2 295);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.16 0.015 260);
-  --secondary-foreground: oklch(0.88 0 0);
-  --muted: oklch(0.16 0.015 260);
-  --muted-foreground: oklch(0.58 0 0);
-  --accent: oklch(0.7 0.2 295);
-  --accent-foreground: oklch(0.98 0 0);
+  /* Studio Dark — cool charcoal + navy accent */
+  --background: #080d16;
+  --foreground: #f2f5fa;
+  --card: #0f1621;
+  --card-foreground: #f2f5fa;
+  --popover: #0f1621;
+  --popover-foreground: #f2f5fa;
+  --primary: #7eb6f0;
+  --primary-foreground: #eef2f9;
+  --primary-surface: #154d8c;
+  --secondary: #141b26;
+  --secondary-foreground: #dce3ee;
+  --muted: #141b26;
+  --muted-foreground: #9aa8b8;
+  --accent: #7eb6f0;
+  --accent-foreground: #eef2f9;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.2 0.015 260);
-  --input: oklch(0.2 0.015 260);
-  --ring: oklch(0.7 0.2 295);
+  --border: #282e38;
+  --input: #282e38;
+  --ring: #7eb6f0;
   --chart-1: oklch(0.828 0.111 230.318);
   --chart-2: oklch(0.685 0.169 237.323);
   --chart-3: oklch(0.588 0.158 241.966);
   --chart-4: oklch(0.5 0.134 242.749);
   --chart-5: oklch(0.443 0.11 240.79);
-  --sidebar: oklch(0.1 0.015 260);
-  --sidebar-foreground: oklch(0.96 0 0);
-  --sidebar-primary: oklch(0.7 0.2 295);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.16 0.015 260);
-  --sidebar-accent-foreground: oklch(0.88 0 0);
-  --sidebar-border: oklch(0.2 0.015 260);
-  --sidebar-ring: oklch(0.7 0.2 295);
+  --sidebar: #0f1621;
+  --sidebar-foreground: #f2f5fa;
+  --sidebar-primary: #7eb6f0;
+  --sidebar-primary-foreground: #eef2f9;
+  --sidebar-accent: #141b26;
+  --sidebar-accent-foreground: #dce3ee;
+  --sidebar-border: #282e38;
+  --sidebar-ring: #7eb6f0;
 
-  --glow-color: oklch(0.7 0.2 295 / 0.12);
-  --glow-color-strong: oklch(0.7 0.2 295 / 0.22);
+  --gradient-from: #7eb6f0;
+  --gradient-to: #a8cdf8;
 
-  /* Shader palette — ChromaFlow (interactive purple) */
-  --shader-primary: #a78bfa;
+  --glow-color: color-mix(in srgb, #7eb6f0 12%, transparent);
+  --glow-color-strong: color-mix(in srgb, #7eb6f0 22%, transparent);
+
+  /* Shader palette — ChromaFlow (interactive navy) */
+  --shader-primary: #7eb6f0;
 
   /* Shader palette — Swirl (subtle ambient base) */
-  --shader-swirl-a: #1a1235;
-  --shader-swirl-b: #1f1f1f;
+  --shader-swirl-a: #080d16;
+  --shader-swirl-b: #0f1621;
 }
 
 @layer base {
@@ -145,14 +156,18 @@
     @apply bg-background text-foreground;
   }
   h1 {
-    @apply font-heading uppercase;
+    @apply font-heading uppercase; /* Bebas — display */
   }
   h2,
   h3,
   h4,
   h5,
   h6 {
-    @apply font-heading font-bold uppercase;
+    @apply font-sans font-bold tracking-tight uppercase; /* Inter Bold — Constantine section headings */
+  }
+  h2,
+  h3 {
+    letter-spacing: -0.04em;
   }
 }
 

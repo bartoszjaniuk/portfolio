@@ -45,13 +45,7 @@ export const ParallaxImage = ({
         className="pointer-events-none absolute inset-x-0 top-0 bottom-0 z-0 will-change-transform"
         style={{ y: prefersReducedMotion ? 0 : parallaxY }}
       >
-        <Image
-          sizes="100vw"
-          src={src}
-          alt={alt}
-          fill
-          className="object-cover"
-        />
+        <Image src={src} alt={alt} fill objectFit="cover" />
       </motion.div>
 
       {overlayComponent ? overlayComponent : null}

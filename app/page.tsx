@@ -5,8 +5,8 @@ import {
 import Header from "@/components/layout/Header";
 import { Introduction } from "@/features/Homepage/Introduction";
 import { TechStackSection } from "@/features/Homepage/TechStackSection";
-import { TechToolsSection } from "@/features/Homepage/TechToolsSection";
-import { ServicesSection } from "@/features/Homepage/ServicesSection";
+import { AboutMeSection } from "@/features/Homepage/AboutMeSection";
+import { ListedProjectsSection } from "@/features/Homepage/ListedProjectsSection";
 import { GotIdeaSection } from "@/features/Homepage/GotIdeaSection";
 import { ExperienceSection } from "@/features/Homepage/ExperienceSection";
 
@@ -34,15 +34,11 @@ export default function Home() {
         <div className="relative z-10">
           <Header />
           <Introduction />
+          <AboutMeSection />
+          <ListedProjectsSection />
           <ExperienceSection />
           <TechStackSection />
-          <TechToolsSection />
-          <ServicesSection />
           <GotIdeaSection />
-          {/* <ProjectsGrid /> */}
-          {/* <LabNotes /> */}
-          {/* <Workbench /> */}
-          {/* <Footer />  */}
         </div>
       </main>
     </>

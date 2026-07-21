@@ -31,7 +31,7 @@ export const IntroActions = () => {
         <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">
           →
         </span>
-        <span className="bg-primary absolute inset-0 z-0 -translate-x-full transition-transform duration-500 group-hover:translate-x-0" />
+        <span className="bg-primary-surface absolute inset-0 z-0 -translate-x-full transition-transform duration-500 group-hover:translate-x-0" />
       </MagneticButton>
     </div>
   );

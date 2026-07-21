@@ -1,5 +1,6 @@
 "use client";
 
+import { Eyebrow } from "@/components/ui/eyebrow";
 import {
   getLongestText,
   useTypewriter,
@@ -13,18 +14,16 @@ export const IntroHeadline = () => {
   const displayText = useTypewriter(roles);
 
   return (
-    <div className="animate-fade-in-up space-y-3">
-      <p className="text-primary text-xs font-semibold tracking-widest uppercase sm:tracking-[0.35em]">
-        {introCopy.tagline}
-      </p>
-      <h1 className="text-4xl tracking-tight text-balance uppercase sm:text-4xl lg:text-5xl xl:text-7xl">
+    <div className="animate-fade-in-up">
+      <Eyebrow tone="primary">{introCopy.tagline}</Eyebrow>
+      <h1 className="text-3xl tracking-tight text-balance uppercase sm:text-4xl lg:text-5xl xl:text-7xl">
         {introCopy.headline}
 
         <br />
         <TypewriterText
           text={displayText}
           placeholder={longestRole}
-          className="from-primary/50 to-accent bg-linear-to-l bg-clip-text text-transparent"
+          className="bg-linear-to-l from-(--gradient-from) to-(--gradient-to) bg-clip-text text-transparent"
         />
       </h1>
     </div>

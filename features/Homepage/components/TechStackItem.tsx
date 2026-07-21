@@ -66,10 +66,10 @@ export const TechStackItem = ({ item, className }: TechStackItemProps) => {
     <article className={cn("shrink-0", className)}>
       <Card
         className={cn(
-          "border-border/80 w-[min(420px,85vw)] gap-6 rounded-3xl border py-0",
+          "border-border/80 w-full gap-6 rounded-3xl border py-0 md:w-[min(420px,85vw)]",
           "bg-secondary/60 backdrop-blur-sm",
           "shadow-[0_8px_32px_oklch(0_0_0/0.24)]",
-          "min-h-[min(520px,55vh)]",
+          "md:min-h-[min(520px,55vh)]",
         )}
       >
         <CardContent className="flex h-full flex-col gap-6 p-6 sm:p-8">
@@ -78,7 +78,7 @@ export const TechStackItem = ({ item, className }: TechStackItemProps) => {
             {item.secondaryLogo ? (
               <TechStackLogoImage logo={item.secondaryLogo} />
             ) : null}
-            <h3 className="font-heading text-2xl tracking-wide uppercase">
+            <h3 className="font-sans text-2xl font-bold tracking-tight uppercase">
               {item.name}
             </h3>
           </header>

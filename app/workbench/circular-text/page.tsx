@@ -31,7 +31,7 @@ export default function CircularTextPage() {
             <CircularTextBadge variant="primary" {...badgeProps} />
           </div>
 
-          <div className="bg-primary flex flex-col items-center gap-4 rounded-md p-10">
+          <div className="bg-primary-surface flex flex-col items-center gap-4 rounded-md p-10">
             <p className="text-primary-foreground/80 text-sm font-medium">
               Default variant
             </p>

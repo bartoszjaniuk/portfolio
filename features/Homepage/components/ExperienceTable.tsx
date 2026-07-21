@@ -17,7 +17,7 @@ const cellLabelClass =
   "mb-1 block text-[0.65rem] font-medium tracking-widest text-muted-foreground uppercase md:hidden";
 
 const cellValueClass =
-  "text-xs font-medium tracking-wide text-foreground uppercase sm:text-sm";
+  "text-lg font-medium tracking-wide text-foreground uppercase";
 
 const CompanyCell = ({ job }: { job: ExperienceItem }) => (
   <>
@@ -47,7 +47,7 @@ export const ExperienceTable = () => (
         <div
           key={column.key}
           role="columnheader"
-          className="text-muted-foreground text-left text-[0.65rem] font-medium tracking-widest uppercase"
+          className="text-muted-foreground text-left text-sm font-medium tracking-widest uppercase"
         >
           {column.label}
         </div>
@@ -76,7 +76,7 @@ export const ExperienceTable = () => (
               {job.bullets.map((bullet) => (
                 <li
                   key={bullet}
-                  className="text-muted-foreground flex gap-2 text-sm leading-relaxed normal-case"
+                  className="text-muted-foreground flex gap-2 text-lg leading-relaxed normal-case"
                 >
                   <span aria-hidden className="text-primary mt-1 shrink-0">
                     ▹

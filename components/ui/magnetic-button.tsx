@@ -56,7 +56,7 @@ export function MagneticButton({
 
   const variants = {
     primary:
-      "border-primary bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground",
+      "border-primary bg-primary/10 text-primary hover:bg-primary-surface hover:text-primary-foreground",
     secondary:
       "border-border bg-transparent text-muted-foreground hover:border-foreground hover:bg-secondary/50 hover:text-foreground",
     ghost: "border-transparent bg-transparent text-foreground hover:bg-muted",
@@ -64,7 +64,7 @@ export function MagneticButton({
 
   const sizes = {
     default: "px-6 py-2.5 text-sm",
-    lg: "px-7 py-4 text-sm sm:py-3.5",
+    lg: "px-5 py-3 text-sm sm:px-7 sm:py-3.5",
   };
 
   return (

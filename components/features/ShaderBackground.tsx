@@ -71,7 +71,7 @@ export const ShaderBackground = ({
     return null;
   }
 
-  const overlayOpacity = isDark ? "bg-background/40" : "bg-background/10";
+  const overlayOpacity = isDark ? "bg-background/40" : "bg-background/20";
 
   return (
     <div

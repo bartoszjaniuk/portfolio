@@ -15,7 +15,7 @@ export const Logo = ({ className }: LogoProps) => {
       fill="none"
       aria-hidden="true"
       className={cn(
-        "text-foreground h-10 w-auto shrink-0 transition-transform duration-300 group-hover:scale-105",
+        "text-muted-foreground h-10 w-auto shrink-0 transition-transform duration-300 group-hover:scale-105",
         className,
       )}
     >

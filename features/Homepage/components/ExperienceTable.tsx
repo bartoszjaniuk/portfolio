@@ -1,7 +1,4 @@
-import {
-  experienceItems,
-  type ExperienceItem,
-} from "../utils/experience-content";
+import type { HomePageExperience } from "@/lib/sanity/fetchers/get-home-page";
 
 const columns = [
   { key: "company", label: "Company / Organization" },
@@ -19,21 +16,34 @@ const cellLabelClass =
 const cellValueClass =
   "text-lg font-medium tracking-wide text-foreground uppercase";
 
-const CompanyCell = ({ job }: { job: ExperienceItem }) => (
-  <>
-    <span className={cellLabelClass}>{columns[0].label}</span>
-    <a
-      href={job.companyUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`${cellValueClass} text-primary focus-visible:ring-ring/50 transition-colors hover:underline focus-visible:rounded-sm focus-visible:ring-2 focus-visible:outline-none`}
-    >
-      {job.companyFull}
-    </a>
-  </>
-);
+export type ExperienceTableProps = {
+  items: HomePageExperience[];
+};
 
-export const ExperienceTable = () => (
+const CompanyCell = ({ job }: { job: HomePageExperience }) => {
+  const label = job.companyFull ?? job.company ?? "";
+  const href = job.companyUrl;
+
+  return (
+    <>
+      <span className={cellLabelClass}>{columns[0].label}</span>
+      {href ? (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${cellValueClass} text-primary focus-visible:ring-ring/50 transition-colors hover:underline focus-visible:rounded-sm focus-visible:ring-2 focus-visible:outline-none`}
+        >
+          {label}
+        </a>
+      ) : (
+        <span className={`${cellValueClass} text-primary`}>{label}</span>
+      )}
+    </>
+  );
+};
+
+export const ExperienceTable = ({ items }: ExperienceTableProps) => (
   <div
     role="table"
     aria-label="Professional experience"
@@ -55,39 +65,43 @@ export const ExperienceTable = () => (
     </div>
 
     <div role="rowgroup">
-      {experienceItems.map((job) => (
-        <div key={job.id} role="row" className={rowGridClass}>
-          <div role="cell">
-            <CompanyCell job={job} />
+      {items.map((job) => {
+        const bullets = job.bullets ?? [];
+
+        return (
+          <div key={job.key} role="row" className={rowGridClass}>
+            <div role="cell">
+              <CompanyCell job={job} />
+            </div>
+            <div role="cell">
+              <span className={cellLabelClass}>{columns[1].label}</span>
+              <span className={cellValueClass}>{job.role}</span>
+            </div>
+            <div role="cell">
+              <span className={cellLabelClass}>{columns[2].label}</span>
+              <span className={`${cellValueClass} md:whitespace-nowrap`}>
+                {job.range}
+              </span>
+            </div>
+            <div role="cell">
+              <span className={cellLabelClass}>{columns[3].label}</span>
+              <ul className="space-y-2">
+                {bullets.map((bullet) => (
+                  <li
+                    key={bullet}
+                    className="text-muted-foreground flex gap-2 text-lg leading-relaxed normal-case"
+                  >
+                    <span aria-hidden className="text-primary mt-1 shrink-0">
+                      ▹
+                    </span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div role="cell">
-            <span className={cellLabelClass}>{columns[1].label}</span>
-            <span className={cellValueClass}>{job.role}</span>
-          </div>
-          <div role="cell">
-            <span className={cellLabelClass}>{columns[2].label}</span>
-            <span className={`${cellValueClass} md:whitespace-nowrap`}>
-              {job.range}
-            </span>
-          </div>
-          <div role="cell">
-            <span className={cellLabelClass}>{columns[3].label}</span>
-            <ul className="space-y-2">
-              {job.bullets.map((bullet) => (
-                <li
-                  key={bullet}
-                  className="text-muted-foreground flex gap-2 text-lg leading-relaxed normal-case"
-                >
-                  <span aria-hidden className="text-primary mt-1 shrink-0">
-                    ▹
-                  </span>
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </div>
 );

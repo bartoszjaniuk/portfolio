@@ -4,13 +4,19 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import type {
-  TechStackItemData,
-  TechStackLogo,
-} from "../utils/tech-stack-content";
+import type { ResolvedThemedLogo } from "../utils/cms-media";
+
+export type TechStackItemView = {
+  key: string;
+  name: string;
+  logo: ResolvedThemedLogo;
+  secondaryLogo?: ResolvedThemedLogo;
+  description: string;
+  tags: string[];
+};
 
 type TechStackItemProps = {
-  item: TechStackItemData;
+  item: TechStackItemView;
   className?: string;
 };
 
@@ -18,7 +24,7 @@ const TechStackLogoImage = ({
   logo,
   className,
 }: {
-  logo: TechStackLogo;
+  logo: ResolvedThemedLogo;
   className?: string;
 }) => {
   const layout = logo.layout ?? "wordmark";

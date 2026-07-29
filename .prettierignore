@@ -7,3 +7,8 @@ package-lock.json
 pnpm-lock.yaml
 yarn.lock
 next-env.d.ts
+# Standalone Sanity Studio build/runtime artifacts
+sanity/dist
+sanity/.sanity
+sanity/bun.lock
+sanity/node_modules

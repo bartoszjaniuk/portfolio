@@ -30,5 +30,11 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "sanity/node_modules",
+    "sanity/dist",
+    "sanity/.sanity",
+    "sanity/scripts"
+  ]
 }

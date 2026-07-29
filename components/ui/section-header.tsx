@@ -4,6 +4,10 @@ import { type VariantProps } from "class-variance-authority";
 import { Eyebrow, eyebrowVariants } from "@/components/ui/eyebrow";
 import { cn } from "@/lib/utils";
 
+/** Shared section title typography (~40px from sm+, matching Constantine). */
+const sectionHeadingClassName =
+  "text-3xl font-bold tracking-tight uppercase sm:text-[2.5rem] sm:leading-none";
+
 type SectionHeaderProps = {
   children: React.ReactNode;
   eyebrow: React.ReactNode;
@@ -41,4 +45,4 @@ function SectionHeader({
   );
 }
 
-export { SectionHeader };
+export { SectionHeader, sectionHeadingClassName };

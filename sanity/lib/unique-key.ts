@@ -1,0 +1,25 @@
+import type {ValidationContext} from 'sanity'
+
+/**
+ * Async uniqueness check that excludes both the published and draft IDs of the
+ * current document (avoids self-match after the first draft save).
+ */
+export function uniqueKeyAmongType(documentType: string) {
+  return async (value: string | undefined, context: ValidationContext) => {
+    if (!value) return true
+
+    const client = context.getClient({apiVersion: '2025-10-15'})
+    const rawId = context.document?._id
+    if (!rawId) return true
+
+    const publishedId = rawId.replace(/^drafts\./, '')
+    const draftId = `drafts.${publishedId}`
+
+    const existing = await client.fetch<number>(
+      `count(*[_type == $type && key == $key && !(_id in [$publishedId, $draftId])])`,
+      {type: documentType, key: value, publishedId, draftId},
+    )
+
+    return existing === 0 || 'Key must be unique'
+  }
+}

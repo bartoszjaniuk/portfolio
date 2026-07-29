@@ -1,30 +1,41 @@
 import { Container } from "@/components/layout/Container";
-import { SectionHeader } from "@/components/ui/section-header";
+import {
+  SectionHeader,
+  sectionHeadingClassName,
+} from "@/components/ui/section-header";
+import type { HomePageData } from "@/lib/sanity/fetchers/get-home-page";
+import { cn } from "@/lib/utils";
 import { ExperienceTable } from "./components/ExperienceTable";
-import { experienceCopy } from "./utils/experience-content";
+import { HeadlineSegments } from "./components/HeadlineSegments";
 
-export const ExperienceSection = () => (
-  <Container
-    id="experience"
-    aria-labelledby="experience-heading"
-    className="scroll-mt-24 sm:scroll-mt-28"
-  >
-    <SectionHeader eyebrow={experienceCopy.eyebrow}>
-      <h2
-        id="experience-heading"
-        className="text-foreground max-w-4xl text-3xl font-bold tracking-tight uppercase sm:text-5xl lg:max-w-5xl lg:text-6xl"
-      >
-        {experienceCopy.headline.map((segment, index) => (
-          <span
-            key={`${segment.text}-${index}`}
-            className={segment.accent ? "text-primary" : "text-foreground"}
-          >
-            {segment.text}
-          </span>
-        ))}
-      </h2>
-    </SectionHeader>
+export type ExperienceSectionProps = {
+  experienceSection: NonNullable<HomePageData["experienceSection"]>;
+};
 
-    <ExperienceTable />
-  </Container>
-);
+export const ExperienceSection = ({
+  experienceSection,
+}: ExperienceSectionProps) => {
+  const items = experienceSection.items ?? [];
+
+  return (
+    <Container
+      id="experience"
+      aria-labelledby="experience-heading"
+      className="scroll-mt-24 sm:scroll-mt-28"
+    >
+      <SectionHeader eyebrow={experienceSection.eyebrow ?? undefined}>
+        <h2
+          id="experience-heading"
+          className={cn(
+            sectionHeadingClassName,
+            "text-foreground max-w-4xl lg:max-w-5xl",
+          )}
+        >
+          <HeadlineSegments segments={experienceSection.headline} />
+        </h2>
+      </SectionHeader>
+
+      <ExperienceTable items={items} />
+    </Container>
+  );
+};

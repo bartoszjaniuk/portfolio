@@ -1,0 +1,109 @@
+"use client";
+
+import {
+  GithubLogoIcon,
+  LinkedinLogoIcon,
+  LinkSimpleIcon,
+  XLogoIcon,
+  type Icon,
+} from "@phosphor-icons/react";
+import { cn } from "@/lib/utils";
+import { ResolvedSocialLink } from "../Header.types";
+
+const SOCIAL_ICONS: Record<string, Icon> = {
+  github: GithubLogoIcon,
+  linkedin: LinkedinLogoIcon,
+  x: XLogoIcon,
+  other: LinkSimpleIcon,
+};
+
+type SocialIconListProps = {
+  links: ResolvedSocialLink[];
+  variant: "desktop" | "mobile";
+};
+
+export function SocialIconList({ links, variant }: SocialIconListProps) {
+  if (!links.length) return null;
+
+  if (variant === "desktop") {
+    return (
+      <div className="hidden items-center gap-1 sm:flex">
+        {links.map((link) => {
+          const Icon = SOCIAL_ICONS[link.network] ?? LinkSimpleIcon;
+          return (
+            <a
+              key={`${link.href}-${link.label}`}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={link.label}
+              className="group text-muted-foreground hover:text-primary hover:bg-primary/10 relative flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-300"
+            >
+              <Icon className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+              <span className="bg-card border-border text-muted-foreground pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 rounded-md border px-2.5 py-1 text-[10px] whitespace-nowrap opacity-0 shadow-lg transition-all duration-200 group-hover:-bottom-9 group-hover:opacity-100">
+                {link.label}
+              </span>
+            </a>
+          );
+        })}
+      </div>
+    );
+  }
+
+  return (
+    <>
+      {links.map((link) => {
+        const Icon = SOCIAL_ICONS[link.network] ?? LinkSimpleIcon;
+        return (
+          <a
+            key={`${link.href}-${link.label}`}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={link.label}
+            className="border-border/50 text-muted-foreground active:bg-secondary hover:border-primary/50 hover:text-primary hover:bg-primary/10 flex h-11 w-11 items-center justify-center rounded-lg border transition-colors"
+          >
+            <Icon className="h-4 w-4" />
+          </a>
+        );
+      })}
+    </>
+  );
+}
+
+type HamburgerButtonProps = {
+  isOpen: boolean;
+  onClick: () => void;
+};
+
+export function HamburgerButton({ isOpen, onClick }: HamburgerButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      className="border-border bg-card/50 hover:bg-secondary flex h-10 w-10 items-center justify-center rounded-lg border transition-colors md:hidden"
+      aria-label="Toggle menu"
+      aria-expanded={isOpen}
+    >
+      <div className="flex w-5 flex-col gap-1.5">
+        <span
+          className={cn(
+            "bg-foreground h-0.5 origin-center transition-all duration-300",
+            isOpen ? "w-5 translate-y-2 rotate-45" : "w-5",
+          )}
+        />
+        <span
+          className={cn(
+            "bg-foreground h-0.5 w-3.5 transition-all duration-300",
+            isOpen && "translate-x-2 opacity-0",
+          )}
+        />
+        <span
+          className={cn(
+            "bg-foreground h-0.5 origin-center transition-all duration-300",
+            isOpen ? "w-5 -translate-y-2 -rotate-45" : "w-5",
+          )}
+        />
+      </div>
+    </button>
+  );
+}

@@ -34,8 +34,8 @@ export const ContactMeLink = ({ locale }: ContactMeLinkProps) => {
       ref={ref}
       href={localizeHref(locale, "/contact-me")}
       className={cn(
-        "text-primary-foreground relative mt-8 inline-block w-fit font-bold tracking-tight",
-        "text-5xl sm:text-7xl lg:text-9xl",
+        "text-primary-foreground relative inline-block w-fit font-bold tracking-tight",
+        "text-5xl sm:text-7xl lg:text-8xl",
         "focus-visible:ring-ring focus-visible:ring-offset-primary outline-none focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-offset-2",
       )}
     >

@@ -18,7 +18,8 @@ const homePageFields = /* groq */ `{
     descriptionBefore,
     descriptionAfter,
     employer { href, label },
-    primaryCta { href, label }
+    primaryCta { href, label },
+    scrollHint
   },
   about {
     eyebrow,
@@ -52,6 +53,13 @@ const homePageFields = /* groq */ `{
   experienceSection {
     eyebrow,
     headline[] { text, accent, newLine },
+    columnHeaders {
+      company,
+      role,
+      year,
+      description,
+      ariaLabel
+    },
     items[]->{
       key,
       company,
@@ -136,9 +144,32 @@ const homePageFields = /* groq */ `{
       ctaHref
     }
   },
+  faqSection {
+    eyebrow,
+    headline[] { text, accent, newLine },
+    items[] {
+      question,
+      answer
+    }
+  },
   gotIdea {
-    line1,
-    line2
+    eyebrow,
+    headline[] { text, accent, newLine },
+    image,
+    form {
+      emailLabel,
+      emailPlaceholder,
+      subjectLabel,
+      subjectPlaceholder,
+      messageLabel,
+      messagePlaceholder,
+      submitLabel,
+      submittingLabel,
+      successTitle,
+      successBody,
+      sendAnotherLabel,
+      errorFallback
+    }
   }
 }`;
 

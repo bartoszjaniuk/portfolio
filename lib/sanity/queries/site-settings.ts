@@ -34,6 +34,18 @@ export const SITE_SETTINGS_QUERY = defineQuery(/* groq */ `
     "websiteDescription": coalesce(
       websiteDescription[language == $locale][0].value,
       websiteDescription[language == "en"][0].value
+    ),
+    "footerInnerPagesHeading": coalesce(
+      footerInnerPagesHeading[language == $locale][0].value,
+      footerInnerPagesHeading[language == "en"][0].value
+    ),
+    "footerSocialMediaHeading": coalesce(
+      footerSocialMediaHeading[language == $locale][0].value,
+      footerSocialMediaHeading[language == "en"][0].value
+    ),
+    "footerCopyrightSuffix": coalesce(
+      footerCopyrightSuffix[language == $locale][0].value,
+      footerCopyrightSuffix[language == "en"][0].value
     )
   }
 `);

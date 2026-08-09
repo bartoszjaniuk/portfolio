@@ -13,7 +13,7 @@ export type IntroductionProps = {
 };
 
 export const Introduction = ({ locale, intro }: IntroductionProps) => (
-  <Container className="h-screen pt-20" contained={false}>
+  <Container id="intro" className="h-screen pt-20" contained={false}>
     <ShaderBackground variant="contained" />
 
     <div className="relative z-10 mx-auto max-w-7xl">
@@ -30,6 +30,6 @@ export const Introduction = ({ locale, intro }: IntroductionProps) => (
       </div>
     </div>
 
-    <ScrollHint />
+    {intro.scrollHint ? <ScrollHint label={intro.scrollHint} /> : null}
   </Container>
 );

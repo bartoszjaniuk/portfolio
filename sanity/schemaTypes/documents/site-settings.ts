@@ -80,6 +80,22 @@ export const siteSettings = defineType({
       type: 'internationalizedArrayText',
       description: 'WebSite JSON-LD description',
     }),
+    defineField({
+      name: 'footerInnerPagesHeading',
+      title: 'Footer Inner Pages Heading',
+      type: 'internationalizedArrayString',
+    }),
+    defineField({
+      name: 'footerSocialMediaHeading',
+      title: 'Footer Social Media Heading',
+      type: 'internationalizedArrayString',
+    }),
+    defineField({
+      name: 'footerCopyrightSuffix',
+      title: 'Footer Copyright Suffix',
+      type: 'internationalizedArrayString',
+      description: 'Text after the brand name, e.g. "All rights reserved."',
+    }),
   ],
   preview: {
     select: {title: 'brandName'},

@@ -34,6 +34,19 @@ export function localePath(locale: Locale, path = "/"): string {
   return `/${locale}${normalized}`;
 }
 
+/**
+ * Swap the locale segment in a pathname, or prefix via `localePath` when absent.
+ * `/en/about` + `pl` → `/pl/about`
+ */
+export function swapLocaleInPath(pathname: string, nextLocale: Locale): string {
+  const segments = pathname.split("/");
+  if (segments[1] && isLocale(segments[1])) {
+    segments[1] = nextLocale;
+    return segments.join("/");
+  }
+  return localePath(nextLocale, pathname);
+}
+
 export function isExternalHref(href: string): boolean {
   return /^(https?:|mailto:|tel:)/i.test(href);
 }

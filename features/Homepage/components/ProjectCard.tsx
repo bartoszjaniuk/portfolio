@@ -30,7 +30,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
           fill
           sizes="(max-width: 768px) 100vw, min(420px, 42vw)"
           className="absolute inset-0"
-          imageClassName="transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+          imageClassName="transition-transform duration-500 ease-out group-hover:scale-[1.03] "
         />
       </div>
       <p className="text-foreground mt-3 text-sm font-medium tracking-wide uppercase sm:text-base">

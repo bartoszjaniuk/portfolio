@@ -97,6 +97,7 @@ export type HomePageData = {
     descriptionAfter: string | null;
     employer: CmsLink;
     primaryCta: CmsLink;
+    scrollHint: string | null;
   } | null;
   about: {
     eyebrow: string | null;
@@ -116,6 +117,13 @@ export type HomePageData = {
   experienceSection: {
     eyebrow: string | null;
     headline: HeadlineSegment[] | null;
+    columnHeaders: {
+      company: string | null;
+      role: string | null;
+      year: string | null;
+      description: string | null;
+      ariaLabel: string | null;
+    } | null;
     items: HomePageExperience[] | null;
   } | null;
   techStackSection: {
@@ -123,9 +131,34 @@ export type HomePageData = {
     headline: HeadlineSegment[] | null;
     items: HomePageTechItem[] | null;
   } | null;
+  faqSection: {
+    eyebrow: string | null;
+    headline: HeadlineSegment[] | null;
+    items:
+      | {
+          question: string | null;
+          answer: string | null;
+        }[]
+      | null;
+  } | null;
   gotIdea: {
-    line1: string | null;
-    line2: string | null;
+    eyebrow: string | null;
+    headline: HeadlineSegment[] | null;
+    image: CmsImage;
+    form: {
+      emailLabel: string | null;
+      emailPlaceholder: string | null;
+      subjectLabel: string | null;
+      subjectPlaceholder: string | null;
+      messageLabel: string | null;
+      messagePlaceholder: string | null;
+      submitLabel: string | null;
+      submittingLabel: string | null;
+      successTitle: string | null;
+      successBody: string | null;
+      sendAnotherLabel: string | null;
+      errorFallback: string | null;
+    } | null;
   } | null;
 };
 

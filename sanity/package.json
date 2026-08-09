@@ -10,6 +10,8 @@
     "deploy-graphql": "sanity graphql deploy",
     "dev": "sanity dev",
     "seed": "bun run scripts/seed-homepage.ts",
+    "patch-contact-chrome": "bun run scripts/patch-contact-chrome.ts",
+    "patch-faq": "bun run scripts/patch-faq.ts",
     "start": "sanity start"
   },
   "keywords": [
@@ -18,10 +20,10 @@
   "dependencies": {
     "@sanity/client": "^7.24.0",
     "@sanity/document-internationalization": "^6.2.24",
-    "@sanity/vision": "^6.6.0",
+    "@sanity/vision": "^6.9.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "sanity": "^6.6.0",
+    "sanity": "^6.9.1",
     "sanity-plugin-internationalized-array": "^5.1.23",
     "styled-components": "^6.1.18"
   },

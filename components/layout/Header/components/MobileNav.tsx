@@ -3,6 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { LanguageToggle } from "../../LanguageToggle";
 import { ThemeToggle } from "../../ThemeToggle";
 import { ResolvedNavItem, ResolvedSocialLink } from "../Header.types";
 import { HamburgerButton, SocialIconList } from "./SocialIconList";
@@ -28,7 +29,6 @@ export function MobileNav({
       <nav className="flex items-center justify-between">
         {children}
         <div className="flex items-center gap-4">
-          <SocialIconList links={socialLinks} variant="desktop" />
           <StatusBadge statusLabel={statusLabel} variant="online" />
           <HamburgerButton
             isOpen={isOpen}
@@ -59,6 +59,9 @@ export function MobileNav({
 
           <div className="border-border/50 mt-4 flex items-center gap-2 border-t px-4 pt-4">
             <SocialIconList links={socialLinks} variant="mobile" />
+            <div className="border-border/50 flex h-11 items-center justify-center rounded-lg border px-1">
+              <LanguageToggle />
+            </div>
             <div className="border-border/50 flex h-11 w-11 items-center justify-center rounded-lg border">
               <ThemeToggle />
             </div>

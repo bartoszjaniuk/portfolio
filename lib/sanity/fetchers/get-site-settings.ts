@@ -30,6 +30,9 @@ export type SiteSettingsData = {
     worksFor: string | null;
   } | null;
   websiteDescription: string | null;
+  footerInnerPagesHeading: string | null;
+  footerSocialMediaHeading: string | null;
+  footerCopyrightSuffix: string | null;
 };
 
 function assertLocale(locale: string): Locale {

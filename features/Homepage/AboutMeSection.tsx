@@ -22,6 +22,7 @@ export const AboutMeSection = ({ about }: AboutMeSectionProps) => {
 
   return (
     <Container
+      id="about"
       className="bg-primary-surface text-primary-foreground min-h-screen overflow-x-clip"
       innerClassName="relative flex flex-col gap-10 sm:gap-14"
     >

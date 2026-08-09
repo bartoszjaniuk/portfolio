@@ -5,7 +5,7 @@ import { defaultLocale, locales } from "@/lib/i18n/config";
 
 /**
  * Always prefix locale-less paths with the default locale (`en`).
- * Never negotiate Accept-Language — Polish is offered via LocaleBanner only.
+ * Never negotiate Accept-Language — language is chosen via URL / LanguageToggle only.
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

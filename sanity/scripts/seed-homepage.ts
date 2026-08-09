@@ -13,13 +13,24 @@ import {createHash} from 'node:crypto'
 import {existsSync, readFileSync} from 'node:fs'
 import {basename, extname, join, resolve} from 'node:path'
 
+import {
+  HOME_PAGE_EN_ID,
+  HOME_PAGE_PL_ID,
+  SITE_SETTINGS_ID,
+  experienceItems,
+  homePageByLocale,
+  listedProjects,
+  siteSettingsSeed,
+  techItemCopy,
+  type HeadlineSegment,
+  type LocalizedString,
+  type LocalizedStrings,
+} from './seed-content'
+
 const PROJECT_ID = 'pph0cdly'
 const DATASET = 'production'
 const API_VERSION = '2026-05-15'
 
-const HOME_PAGE_EN_ID = 'homePage-en'
-const HOME_PAGE_PL_ID = 'homePage-pl'
-const SITE_SETTINGS_ID = 'siteSettings'
 const TRANSLATION_METADATA_ID = 'translation.metadata.homePage'
 
 const REPO_ROOT = resolve(import.meta.dir, '../..')
@@ -28,12 +39,6 @@ const PUBLIC_DIR = join(REPO_ROOT, 'public')
 type CliFlags = {
   dryRun: boolean
   confirmProduction: boolean
-}
-
-type HeadlineSegment = {
-  text: string
-  accent?: boolean
-  newLine?: boolean
 }
 
 type ThemedLogoSource = {
@@ -53,228 +58,9 @@ type PlannedAction =
   | {kind: 'reuse-asset'; path: string; assetId: string}
 
 // ---------------------------------------------------------------------------
-// Seed inventory (from features/Homepage/** + Header + structured-data)
-// Field-level i18n: EN only — PL coalesces to EN at query time.
+// Seed inventory — shared content lives in ./seed-content.ts (synced from CMS)
+// Logos / assets stay here.
 // ---------------------------------------------------------------------------
-
-const roles = [
-  'modern web applications',
-  'high-performance PWAs',
-  'cross-platform mobile apps',
-  'robust frontend architectures',
-  'scalable full-stack solutions',
-] as const
-
-const introCopy = {
-  tagline: 'Bartosz Janiuk — Software Engineer',
-  headline: 'Engineering Digital',
-  description: {
-    before:
-      'Przekuwam pomysły w działające produkty cyfrowe. Projektuję i wdrażam frontend, aplikacje mobilne oraz integracje backendowe',
-    after: "Currently, I'm focused on building accessible, human-centered products at",
-  },
-  employer: {href: 'https://tsh.io/', label: 'The Software House'},
-  primaryCta: {href: '#projects', label: 'Rozpocznijmy wspólny projekt'},
-} as const
-
-const aboutMeCopy = {
-  eyebrow: '↳ ABOUT ME',
-  badgeText: 'DEVELOPMENT * WEB * MOBILE * PWA * SEO * UI/UX',
-  headline: [
-    {text: 'BLENDING '},
-    {text: 'CREATIVITY', accent: true},
-    {text: 'AND TECHNOLOGY TO FORGE ', newLine: true},
-    {text: 'MOBILE & WEB'},
-    {text: ' APPS', accent: true},
-    {text: ' THAT '},
-    {text: 'RESONATE', accent: true},
-    {text: '.'},
-  ] satisfies HeadlineSegment[],
-  paragraphs: [
-    "I'm Bartosz Janiuk, a battle tested passionate about forging digital experiences that leave a lasting impression. My work spans across web & mobile development, combining creativity and strategy to create meaningful products.",
-    'I focus on designing digital products and visuals that are both functional and aesthetically engaging. Every interface, brand identity, or illustration I create is thoughtfully crafted to ensure intuitive interactions, clear visual clarity, and a cohesive, compelling story.',
-    "Over the years, I've collaborated with a wide range of clients, delivering more than 50 successful projects globally. From innovative startups to established brands, I help transform ideas into tangible, engaging experiences that communicate effectively and resonate with audiences.",
-  ],
-  // Source modules reference /mando.jpeg (missing) and remote portrait URL;
-  // seed uses the existing public portrait asset.
-  portraitImage: '/developer.webp',
-  wideImage: '/developer.webp',
-} as const
-
-const listedProjectsCopy = {
-  eyebrow: '↳ SELECTED WORK',
-  headline: [
-    {text: 'SELECTED '},
-    {text: 'WORKS', accent: true},
-    {text: ' EXPLORING STRUCTURE, INTERACTION, AND VISUAL CLARITY ACROSS '},
-    {text: 'DIGITAL', accent: true},
-    {text: ' PLATFORMS.'},
-  ] satisfies HeadlineSegment[],
-  description:
-    'A curated selection of product interfaces and platforms — from fitness and culinary tools to clinic experiences — focused on structure, interaction, and clarity.',
-  seeAll: {href: '/projects', label: 'SEE ALL WORK'},
-} as const
-
-const listedProjects = [
-  {
-    key: 'fitap',
-    title: 'Fitap',
-    category: 'Fitness App',
-    image: '/projects/fitap.webp',
-    href: '/projects',
-    tint: 'bg-secondary',
-    placement: 'md:top-0 md:left-[4%] lg:left-[0%]',
-    sortOrder: 0,
-  },
-  {
-    key: 'umami',
-    title: 'Umami',
-    category: 'Culinary Platform',
-    image: '/projects/umami.webp',
-    href: '/projects',
-    tint: 'bg-muted',
-    placement: 'md:top-[420px] md:right-[4%] lg:right-[0%]',
-    sortOrder: 1,
-  },
-  {
-    key: 'cookscale',
-    title: 'Cookscale',
-    category: 'Kitchen Tools',
-    image: '/projects/cookscale.webp',
-    href: '/projects',
-    tint: 'bg-secondary',
-    placement: 'md:top-[780px] md:left-[10%] lg:left-[0%]',
-    sortOrder: 2,
-  },
-  {
-    key: 'physio',
-    title: 'Physio',
-    category: 'Clinic Platform',
-    image: '/projects/physioterapy.webp',
-    href: '/projects',
-    tint: 'bg-muted',
-    placement: 'md:top-[1180px] md:right-[6%] lg:right-[0%]',
-    sortOrder: 3,
-  },
-  {
-    key: 'dental',
-    title: 'Dental',
-    category: 'Clinic Website',
-    image: '/projects/stomatology.webp',
-    href: '/projects',
-    tint: 'bg-secondary',
-    placement: 'md:top-[1560px] md:left-[6%] lg:left-0',
-    sortOrder: 4,
-  },
-] as const
-
-const experienceCopy = {
-  eyebrow: '↳ MY EXPERIENCES',
-  headline: [
-    {text: 'A LOOK AT MY '},
-    {text: 'PROFESSIONAL', accent: true},
-    {text: ' JOURNEY, '},
-    {text: 'COLLABORATIONS', accent: true},
-    {text: ', AND ROLES ACROSS DESIGN AND DIGITAL '},
-    {text: 'PROJECTS', accent: true},
-    {text: '.'},
-  ] satisfies HeadlineSegment[],
-} as const
-
-const experienceItems = [
-  {
-    key: 'tsh-mid',
-    company: 'TSH',
-    companyFull: 'The Software House | Gliwice, Poland',
-    companyUrl: 'https://tsh.io/',
-    role: 'Frontend Developer',
-    range: '09/2023 — Present',
-    sortOrder: 0,
-    bullets: [
-      'Develop and maintain scalable web and mobile applications using React and React Native.',
-      'Design and deliver new product features in collaboration with international, cross-functional teams.',
-      'Build reusable components and shared solutions to ensure consistency across web and mobile platforms.',
-      'Participate in architectural discussions and contribute to technical decisions affecting application scalability and maintainability.',
-      'Contribute to internal practices around frontend quality, testing, and maintainable component architecture.',
-    ],
-  },
-  {
-    key: 'tsh-junior',
-    company: 'The Software House',
-    companyFull: 'The Software House | Gliwice, Poland',
-    companyUrl: 'https://tsh.io',
-    role: 'Junior Frontend Developer',
-    range: '04/2022 — 09/2023',
-    sortOrder: 1,
-    bullets: [
-      "Contributed to the full redesign and modernization of the company's web platform.",
-      'Co-developed a reusable UI component library and documented components using Storybook.',
-      'Implemented new frontend features based on product and design requirements.',
-      'Created and maintained unit, integration, and end-to-end tests to improve application reliability.',
-      'Participated in code reviews and collaborated with the development team to maintain code quality.',
-      'Received a promotion in recognition of my contribution to the platform revamp.',
-    ],
-  },
-  {
-    key: 'freelance',
-    company: 'Freelance',
-    companyFull: 'Bartosz Janiuk | Racibórz, Poland',
-    companyUrl: 'https://bartoszjaniuk.pl',
-    role: 'Frontend Engineer',
-    range: '11/2021 — Present',
-    sortOrder: 2,
-    bullets: [
-      'Designed and developed web applications for clients in the nutrition, physiotherapy, and dental publishing industries.',
-      'Built responsive, high-performance websites using Astro, Next.js, and modern frontend technologies.',
-      'Created interactive user experiences and animations with Framer Motion.',
-      'Developed cross-platform mobile applications using Expo and React Native.',
-      'Implemented technical SEO improvements to increase website visibility and search engine performance.',
-    ],
-  },
-  {
-    key: 'codelabs',
-    company: 'CODELABS',
-    companyFull: 'CODELABS.ROCKS | Opole, Poland',
-    companyUrl: 'https://codelabs.rocks',
-    role: 'Frontend Developer Intern',
-    range: '08/2021 — 10/2021',
-    sortOrder: 3,
-    bullets: [
-      'Developed and enhanced client-facing application features using Angular and RxJS.',
-      'Built reusable and responsive UI components based on provided design specifications.',
-      'Used reactive programming patterns to manage asynchronous data flows and user interactions.',
-      'Collaborated with developers and designers to deliver consistent, maintainable frontend solutions.',
-      'Actively participated in daily stand-ups, sprint planning, code reviews, and other Agile ceremonies.',
-    ],
-  },
-  {
-    key: 'codefusion',
-    company: 'CODEFUSION',
-    companyFull: 'CODEFUSION | Opole, Poland',
-    companyUrl: 'https://codefusion.pl',
-    role: 'Software Developer Intern',
-    range: '09/2020 — 10/2020',
-    sortOrder: 4,
-    bullets: [
-      'Developed a custom Visual Studio extension for reading and displaying project roadmaps.',
-      'Implemented features using C# and the .NET framework.',
-      'Participated in daily stand-up meetings, code reviews, and team development activities.',
-    ],
-  },
-] as const
-
-const techStackCopy = {
-  eyebrow: '↳ MY TECH STACK',
-  headline: [
-    {text: 'I WORK WITH '},
-    {text: 'TECHNOLOGIES', accent: true},
-    {text: ' THAT HELP ME '},
-    {text: 'CREATE', accent: true},
-    {text: ' AMAZING', accent: true},
-    {text: ' RESULTS', accent: true},
-    {text: '.'},
-  ] satisfies HeadlineSegment[],
-} as const
 
 const LOGO_BASE = '/logos/tech-stack'
 
@@ -312,234 +98,59 @@ const staticLogo = (
 
 const techStackItems = [
   {
-    key: 'nextjs',
-    name: '',
+    key: 'nextjs' as const,
     logo: themedLogo('nextjs', 'Next.js logo', 394, 80),
-    description:
-      'Buduję szybkie aplikacje webowe z App Router, SSR i optymalizacją pod Core Web Vitals — od landing page po złożone platformy produktowe.',
-    tags: ['APP ROUTER', 'SSR / SSG', 'PERFORMANCE', 'SERVER COMPONENTS', 'EDGE DEPLOYMENT'],
-    testimonial: {
-      avatarSrc: '/developer.webp',
-      quote:
-        'Architektura oparta na Next.js pozwala mi łączyć szybkość renderowania z elastycznym modelem danych — bez kompromisów w UX.',
-      author: 'Bartosz Janiuk',
-      role: 'Frontend Engineer',
-    },
-    cta: {
-      logo: staticLogo(`${LOGO_BASE}/vercel.svg`, 'Vercel logo', 1155, 1000),
-      description:
-        'Deployuję i skaluję projekty Next.js z naciskiem na szybkość ładowania i stabilność w produkcji.',
-      href: '#projects',
-      label: 'Dowiedz się więcej',
-    },
+    testimonialAvatar: '/developer.webp',
+    ctaLogo: staticLogo(`${LOGO_BASE}/vercel.svg`, 'Vercel logo', 1155, 1000),
     sortOrder: 0,
   },
   {
-    key: 'astro',
-    name: '',
+    key: 'astro' as const,
     logo: themedLogo('astro', 'Astro logo', 460, 160, {scale: 1.55}),
-    description:
-      'Tworzę lekkie strony contentowe z architekturą islands — minimalny JavaScript, szybki SSR i elastyczna integracja z React, Vue czy Svelte.',
-    tags: ['ISLANDS ARCHITECTURE', 'CONTENT SITES', 'ZERO JS', 'SSR / SSG', 'PERFORMANCE'],
-    testimonial: {
-      avatarSrc: '/developer.webp',
-      quote:
-        'Astro to mój wybór dla stron marketingowych i blogów — renderuje tylko to, co potrzebne, a reszta ładuje się na żądanie.',
-      author: 'Bartosz Janiuk',
-      role: 'Frontend Engineer',
-    },
-    cta: {
-      logo: staticLogo(`${LOGO_BASE}/vercel.svg`, 'Vercel logo', 1155, 1000),
-      description:
-        'Wdrażam projekty Astro z naciskiem na wydajność, SEO i prosty pipeline contentowy.',
-      href: '#projects',
-      label: 'Dowiedz się więcej',
-    },
+    testimonialAvatar: '/developer.webp',
+    ctaLogo: staticLogo(`${LOGO_BASE}/vercel.svg`, 'Vercel logo', 1155, 1000),
     sortOrder: 1,
   },
   {
-    key: 'react-native',
-    name: 'React Native',
+    key: 'react-native' as const,
     logo: staticLogo(`${LOGO_BASE}/react-native.svg`, 'React Native logo', 112, 102, {
       layout: 'mark',
     }),
-    description:
-      "Tworzę aplikacje mobilne cross-platform z natywnym feel'em — od prototypów po produkcyjne wdrożenia w ekosystemie Expo i React Native.",
-    tags: ['REACT NATIVE', 'EXPO', 'MOBILE', 'IOS', 'ANDROID', 'APP STORE READY'],
-    testimonial: {
-      avatarSrc: '/developer.webp',
-      quote:
-        'Mobilne produkty muszą być szybkie i przewidywalne — React Native daje mi jeden codebase i spójne doświadczenie na iOS i Android.',
-      author: 'Bartosz Janiuk',
-      role: 'Mobile Developer',
-    },
-    cta: {
-      logo: staticLogo(`${LOGO_BASE}/react.svg`, 'React logo', 23, 20),
-      description:
-        'Łączę React Native z nowoczesnym backendem i design systemem, żeby mobile było naturalnym rozszerzeniem produktu webowego.',
-      href: '#projects',
-      label: 'Dowiedz się więcej',
-    },
+    testimonialAvatar: '/developer.webp',
+    ctaLogo: staticLogo(`${LOGO_BASE}/react.svg`, 'React logo', 23, 20),
     sortOrder: 2,
   },
   {
-    key: 'typescript',
-    name: 'TypeScript',
+    key: 'typescript' as const,
     logo: staticLogo(`${LOGO_BASE}/typescript.svg`, 'TypeScript logo', 512, 512, {
       layout: 'mark',
     }),
-    description:
-      "Stawiam na typowanie od pierwszego dnia — bezpieczne API, czytelne kontrakty i mniej regresji w rosnących codebase'ach.",
-    tags: ['TYPE SAFETY', 'SHARED TYPES', 'STRICT MODE', 'API CONTRACTS', 'MAINTAINABILITY'],
-    testimonial: {
-      avatarSrc: '/developer.webp',
-      quote:
-        'TypeScript to mój standard w każdym projekcie — typy dokumentują intencje i skracają czas debugowania w zespole.',
-      author: 'Bartosz Janiuk',
-      role: 'Full-Stack Engineer',
-    },
-    cta: {
-      logo: staticLogo(`${LOGO_BASE}/typescript.svg`, 'TypeScript logo', 512, 512),
-      description:
-        'Projektuję modele danych i interfejsy, które skalują się wraz z produktem — od MVP po długoterminowy rozwój.',
-      href: '/workbench',
-      label: 'Dowiedz się więcej',
-    },
+    testimonialAvatar: '/developer.webp',
+    ctaLogo: staticLogo(`${LOGO_BASE}/typescript.svg`, 'TypeScript logo', 512, 512),
     sortOrder: 3,
   },
   {
-    key: 'nodejs',
-    name: '',
+    key: 'nodejs' as const,
     logo: themedLogo('nodejs', 'Node.js logo', 267, 80),
-    description:
-      'Buduję skalowalne backendy w ekosystemie Node.js — REST, GraphQL, autoryzacja i integracje z bazami danych oraz usługami chmurowymi.',
-    tags: ['REST API', 'GRAPHQL', 'EVENT-DRIVEN', 'AUTH', 'DATABASES', 'CLOUD INTEGRATIONS'],
-    testimonial: {
-      avatarSrc: '/developer.webp',
-      quote:
-        'Node.js daje mi jeden język od API po skrypty operacyjne — szybkie iteracje i spójny stack w całym projekcie.',
-      author: 'Bartosz Janiuk',
-      role: 'Backend Engineer',
-    },
-    cta: {
-      logo: staticLogo(`${LOGO_BASE}/typescript.svg`, 'TypeScript logo', 512, 512),
-      description:
-        "Projektuję API pod realne obciążenie — od prostych endpointów po złożone systemy z kolejkami i cache'owaniem.",
-      href: '#projects',
-      label: 'Dowiedz się więcej',
-    },
+    testimonialAvatar: '/developer.webp',
+    ctaLogo: staticLogo(`${LOGO_BASE}/typescript.svg`, 'TypeScript logo', 512, 512),
     sortOrder: 4,
   },
   {
-    key: 'nestjs',
-    name: '',
+    key: 'nestjs' as const,
     logo: staticLogo(`${LOGO_BASE}/nestjs.svg`, 'NestJS logo', 595, 212, {scale: 1.1}),
-    description:
-      'Projektuję backendy w Nest.js z modułową architekturą — dependency injection, guardy, pipes i przewidywalna struktura od MVP do produkcji.',
-    tags: [
-      'NEST MODULES',
-      'DEPENDENCY INJECTION',
-      'GUARDS & PIPES',
-      'REST API',
-      'GRAPHQL',
-      'MICROSERVICES',
-    ],
-    testimonial: {
-      avatarSrc: '/developer.webp',
-      quote:
-        'Nest.js daje mi przewidywalną strukturę backendu — dependency injection, moduły i guardy skracają czas od prototypu do produkcji.',
-      author: 'Bartosz Janiuk',
-      role: 'Backend Engineer',
-    },
-    cta: {
-      logo: staticLogo(`${LOGO_BASE}/nestjs.svg`, 'NestJS logo', 1000, 966),
-      description:
-        'Buduję modułowe API w Nest.js — od autoryzacji i walidacji po integracje z kolejkami i bazami danych.',
-      href: '#projects',
-      label: 'Dowiedz się więcej',
-    },
+    testimonialAvatar: '/developer.webp',
+    ctaLogo: staticLogo(`${LOGO_BASE}/nestjs.svg`, 'NestJS logo', 1000, 966),
     sortOrder: 5,
   },
   {
-    key: 'sanity',
-    name: '',
+    key: 'sanity' as const,
     logo: staticLogo(`${LOGO_BASE}/sanity.svg`, 'Sanity logo', 353, 71),
-    description:
-      'Wdrażam headless CMS z Sanity — modelowanie treści, Sanity Studio, GROQ i preview mode dla content-driven aplikacji.',
-    tags: [
-      'HEADLESS CMS',
-      'CONTENT MODELING',
-      'GROQ',
-      'SANITY STUDIO',
-      'PREVIEW MODE',
-      'STRUCTURED CONTENT',
-    ],
-    testimonial: {
-      avatarSrc: '/developer.webp',
-      quote:
-        'Sanity pozwala zespołowi contentowemu pracować niezależnie od developera — strukturalne treści i szybkie iteracje bez deployu kodu.',
-      author: 'Bartosz Janiuk',
-      role: 'Full-Stack Engineer',
-    },
-    cta: {
-      logo: staticLogo(`${LOGO_BASE}/sanity.svg`, 'Sanity logo', 353, 71),
-      description:
-        'Łączę Sanity z Next.js — od schematów treści po live preview i optymalne zapytania GROQ w produkcji.',
-      href: '#projects',
-      label: 'Dowiedz się więcej',
-    },
+    testimonialAvatar: '/developer.webp',
+    ctaLogo: staticLogo(`${LOGO_BASE}/sanity.svg`, 'Sanity logo', 353, 71),
     sortOrder: 6,
   },
 ] as const
-
-const gotIdea = {
-  line1: 'Got an idea?',
-  line2: "Let's talk.",
-} as const
-
-const siteSettingsSeed = {
-  brandName: 'bjaniuk.dev',
-  navItems: [
-    {href: '/', label: 'Home'},
-    {href: '/projects', label: 'Projects'},
-    {href: '/notes', label: 'Notes'},
-    {href: '/workbench', label: 'Workbench'},
-    {href: '/blog', label: 'Blog'},
-  ],
-  socialLinks: [
-    {
-      network: 'github' as const,
-      href: 'https://github.com/bartoszjaniuk',
-      label: 'GitHub',
-    },
-    {
-      network: 'linkedin' as const,
-      href: 'https://www.linkedin.com/in/bartosz-janiuk-89265717b',
-      label: 'LinkedIn',
-    },
-  ],
-  statusLabel: 'open to work',
-  person: {
-    name: 'Bartosz Janiuk',
-    url: 'https://bartoszjaniuk.pl',
-    image: '/developer.webp',
-    sameAs: [
-      'https://github.com/bartoszjaniuk',
-      'https://twitter.com/bartoszjaniuk',
-      'https://linkedin.com/in/bartoszjaniuk',
-    ],
-    jobTitle: 'Software Engineer',
-    worksFor: 'Bartosz Janiuk',
-  },
-  websiteDescription:
-    'Digital workshop where idea meets product. Mobile and web applications for your business.',
-} as const
-
-const homePageSeo = {
-  title: 'Bartosz Janiuk — Software Engineer',
-  description:
-    'Digital workshop where idea meets product. Mobile and web applications for your business.',
-} as const
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -612,8 +223,9 @@ function mimeFor(filePath: string): string {
 function collectRequiredImagePaths(): string[] {
   const paths = new Set<string>()
 
-  paths.add(aboutMeCopy.portraitImage)
-  paths.add(aboutMeCopy.wideImage)
+  paths.add(homePageByLocale.en.about.portraitImage)
+  paths.add(homePageByLocale.en.about.wideImage)
+  paths.add(homePageByLocale.en.gotIdea.image)
   paths.add(siteSettingsSeed.person.image)
 
   for (const project of listedProjects) {
@@ -623,9 +235,9 @@ function collectRequiredImagePaths(): string[] {
   for (const item of techStackItems) {
     paths.add(item.logo.light)
     paths.add(item.logo.dark)
-    paths.add(item.cta.logo.light)
-    paths.add(item.cta.logo.dark)
-    paths.add(item.testimonial.avatarSrc)
+    paths.add(item.ctaLogo.light)
+    paths.add(item.ctaLogo.dark)
+    paths.add(item.testimonialAvatar)
   }
 
   return [...paths].sort()
@@ -645,37 +257,88 @@ function assertLocalImagesExist(): void {
   }
 }
 
-function i18nString(value: string, language = 'en') {
-  return [
-    {
-      _key: language,
+function i18nString(value: string | LocalizedString) {
+  if (typeof value === 'string') {
+    return [
+      {
+        _key: 'en',
+        _type: 'internationalizedArrayStringValue',
+        language: 'en',
+        value,
+      },
+    ]
+  }
+
+  const entries = [
+    {_key: 'en', _type: 'internationalizedArrayStringValue', language: 'en', value: value.en},
+  ]
+  if (value.pl) {
+    entries.push({
+      _key: 'pl',
       _type: 'internationalizedArrayStringValue',
-      language,
-      value,
-    },
-  ]
+      language: 'pl',
+      value: value.pl,
+    })
+  }
+  return entries
 }
 
-function i18nText(value: string, language = 'en') {
-  return [
-    {
-      _key: language,
+function i18nText(value: string | LocalizedString) {
+  if (typeof value === 'string') {
+    return [
+      {
+        _key: 'en',
+        _type: 'internationalizedArrayTextValue',
+        language: 'en',
+        value,
+      },
+    ]
+  }
+
+  const entries = [
+    {_key: 'en', _type: 'internationalizedArrayTextValue', language: 'en', value: value.en},
+  ]
+  if (value.pl) {
+    entries.push({
+      _key: 'pl',
       _type: 'internationalizedArrayTextValue',
-      language,
-      value,
-    },
-  ]
+      language: 'pl',
+      value: value.pl,
+    })
+  }
+  return entries
 }
 
-function i18nBulletList(value: readonly string[], language = 'en') {
-  return [
+function i18nBulletList(value: readonly string[] | LocalizedStrings) {
+  if (Array.isArray(value)) {
+    return [
+      {
+        _key: 'en',
+        _type: 'internationalizedArrayBulletListValue',
+        language: 'en',
+        value: [...value],
+      },
+    ]
+  }
+
+  const localized = value as LocalizedStrings
+  const entries = [
     {
-      _key: language,
+      _key: 'en',
       _type: 'internationalizedArrayBulletListValue',
-      language,
-      value: [...value],
+      language: 'en',
+      value: [...localized.en],
     },
   ]
+  if (localized.pl) {
+    entries.push({
+      _key: 'pl',
+      _type: 'internationalizedArrayBulletListValue',
+      language: 'pl',
+      value: [...localized.pl],
+    })
+  }
+  return entries
 }
 
 function headlineSegments(segments: readonly HeadlineSegment[]) {
@@ -897,25 +560,26 @@ async function seedExperiences(ctx: SeedContext): Promise<string[]> {
 async function seedTechItems(ctx: SeedContext): Promise<string[]> {
   const ids: string[] = []
   for (const item of techStackItems) {
+    const copy = techItemCopy[item.key]
     const logo = await ctx.buildThemedLogo(item.logo)
-    const ctaLogo = await ctx.buildThemedLogo(item.cta.logo)
-    const avatarId = await ctx.resolveAssetId(item.testimonial.avatarSrc)
+    const ctaLogo = await ctx.buildThemedLogo(item.ctaLogo)
+    const avatarId = await ctx.resolveAssetId(item.testimonialAvatar)
 
     const id = await ctx.upsertByKey('techItem', item.key, {
       key: item.key,
-      name: item.name || undefined,
+      name: copy.name || undefined,
       logo,
-      description: i18nText(item.description),
-      tags: i18nBulletList(item.tags),
+      description: i18nText(copy.description),
+      tags: i18nBulletList(copy.tags),
       sortOrder: item.sortOrder,
-      testimonialQuote: i18nText(item.testimonial.quote),
-      testimonialAuthor: i18nString(item.testimonial.author),
-      testimonialRole: i18nString(item.testimonial.role),
+      testimonialQuote: i18nText(copy.testimonial.quote),
+      testimonialAuthor: i18nString(copy.testimonial.author),
+      testimonialRole: i18nString(copy.testimonial.role),
       testimonialAvatar: imageRef(avatarId),
-      ctaDescription: i18nText(item.cta.description),
-      ctaLabel: i18nString(item.cta.label),
+      ctaDescription: i18nText(copy.cta.description),
+      ctaLabel: i18nString(copy.cta.label),
       ctaLogo,
-      ctaHref: item.cta.href,
+      ctaHref: copy.cta.href,
     })
     ids.push(id)
   }
@@ -950,6 +614,9 @@ async function seedSiteSettings(ctx: SeedContext): Promise<void> {
       worksFor: siteSettingsSeed.person.worksFor,
     },
     websiteDescription: i18nText(siteSettingsSeed.websiteDescription),
+    footerInnerPagesHeading: i18nString(siteSettingsSeed.footerInnerPagesHeading),
+    footerSocialMediaHeading: i18nString(siteSettingsSeed.footerSocialMediaHeading),
+    footerCopyrightSuffix: i18nString(siteSettingsSeed.footerCopyrightSuffix),
   })
 }
 
@@ -960,51 +627,68 @@ function buildHomePageDoc(args: {
   techItemIds: string[]
   portraitAssetId: string
   wideAssetId: string
+  contactAssetId: string
 }) {
+  const copy = homePageByLocale[args.language]
+
   return {
     language: args.language,
     seo: {
       _type: 'seoFields',
-      title: homePageSeo.title,
-      description: homePageSeo.description,
+      title: copy.seo.title,
+      description: copy.seo.description,
     },
     intro: {
-      tagline: introCopy.tagline,
-      headline: introCopy.headline,
-      roles: [...roles],
-      descriptionBefore: introCopy.description.before,
-      descriptionAfter: introCopy.description.after,
-      employer: linkField(introCopy.employer),
-      primaryCta: linkField(introCopy.primaryCta),
+      tagline: copy.intro.tagline,
+      headline: copy.intro.headline,
+      roles: [...copy.intro.roles],
+      descriptionBefore: copy.intro.descriptionBefore,
+      descriptionAfter: copy.intro.descriptionAfter,
+      employer: linkField(copy.intro.employer),
+      primaryCta: linkField(copy.intro.primaryCta),
+      scrollHint: copy.intro.scrollHint,
     },
     about: {
-      eyebrow: aboutMeCopy.eyebrow,
-      headline: headlineSegments(aboutMeCopy.headline),
-      badgeText: aboutMeCopy.badgeText,
-      paragraphs: [...aboutMeCopy.paragraphs],
+      eyebrow: copy.about.eyebrow,
+      headline: headlineSegments(copy.about.headline),
+      badgeText: copy.about.badgeText,
+      paragraphs: [...copy.about.paragraphs],
       portraitImage: imageRef(args.portraitAssetId),
       wideImage: imageRef(args.wideAssetId),
     },
     projectsSection: {
-      eyebrow: listedProjectsCopy.eyebrow,
-      headline: headlineSegments(listedProjectsCopy.headline),
-      description: listedProjectsCopy.description,
-      seeAll: linkField(listedProjectsCopy.seeAll),
+      eyebrow: copy.projectsSection.eyebrow,
+      headline: headlineSegments(copy.projectsSection.headline),
+      description: copy.projectsSection.description,
+      seeAll: linkField(copy.projectsSection.seeAll),
       items: refs(args.projectIds),
     },
     experienceSection: {
-      eyebrow: experienceCopy.eyebrow,
-      headline: headlineSegments(experienceCopy.headline),
+      eyebrow: copy.experienceSection.eyebrow,
+      headline: headlineSegments(copy.experienceSection.headline),
+      columnHeaders: {...copy.experienceSection.columnHeaders},
       items: refs(args.experienceIds),
     },
     techStackSection: {
-      eyebrow: techStackCopy.eyebrow,
-      headline: headlineSegments(techStackCopy.headline),
+      eyebrow: copy.techStackSection.eyebrow,
+      headline: headlineSegments(copy.techStackSection.headline),
       items: refs(args.techItemIds),
     },
+    faqSection: {
+      eyebrow: copy.faqSection.eyebrow,
+      headline: headlineSegments(copy.faqSection.headline),
+      items: copy.faqSection.items.map((item, index) => ({
+        _key: stableKey(`faq:${args.language}:${item.question}:${index}`),
+        _type: 'faqItem',
+        question: item.question,
+        answer: item.answer,
+      })),
+    },
     gotIdea: {
-      line1: gotIdea.line1,
-      line2: gotIdea.line2,
+      eyebrow: copy.gotIdea.eyebrow,
+      headline: headlineSegments(copy.gotIdea.headline),
+      image: imageRef(args.contactAssetId),
+      form: {...copy.gotIdea.form},
     },
   }
 }
@@ -1015,8 +699,9 @@ async function seedHomePages(
   experienceIds: string[],
   techItemIds: string[],
 ): Promise<void> {
-  const portraitAssetId = await ctx.resolveAssetId(aboutMeCopy.portraitImage)
-  const wideAssetId = await ctx.resolveAssetId(aboutMeCopy.wideImage)
+  const portraitAssetId = await ctx.resolveAssetId(homePageByLocale.en.about.portraitImage)
+  const wideAssetId = await ctx.resolveAssetId(homePageByLocale.en.about.wideImage)
+  const contactAssetId = await ctx.resolveAssetId(homePageByLocale.en.gotIdea.image)
 
   const shared = {
     projectIds,
@@ -1024,6 +709,7 @@ async function seedHomePages(
     techItemIds,
     portraitAssetId,
     wideAssetId,
+    contactAssetId,
   }
 
   await ctx.upsertFixedId(

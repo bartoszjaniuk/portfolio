@@ -1,3 +1,4 @@
+import { ParallaxImage } from "@/components/features/ParallaxImage";
 import { Container } from "@/components/layout/Container";
 import {
   SectionHeader,
@@ -7,7 +8,8 @@ import type { Locale } from "@/lib/i18n/config";
 import type { HomePageData } from "@/lib/sanity/fetchers/get-home-page";
 import { cn } from "@/lib/utils";
 import { HeadlineSegments } from "../components/HeadlineSegments";
-import { ContactMeLink } from "./ContactMeLink";
+import { cmsImageUrl } from "../utils/cms-media";
+import { ContactForm } from "./ContactForm";
 
 export type ContactMeSectionProps = {
   locale: Locale;
@@ -18,46 +20,40 @@ export const ContactMeSection = ({
   locale,
   gotIdea,
 }: ContactMeSectionProps) => {
+  const imageSrc = cmsImageUrl(gotIdea.image, { width: 600 });
+
   return (
-    <Container className="bg-primary">
-      <SectionHeader eyebrow={"↳ Contact me"} eyebrowTone="onPrimary" flush>
-        <h2
-          id="got-idea-heading"
-          className={cn(sectionHeadingClassName, "max-w-4xl lg:max-w-5xl")}
-        >
-          <HeadlineSegments
-            segments={[
-              {
-                text: "Have a",
-                accent: false,
-              },
-              {
-                text: " project",
-                accent: true,
-              },
-              {
-                text: "in mind?",
-                accent: false,
-              },
-              {
-                text: "Let’s ",
-                accent: false,
-                newLine: false,
-              },
-              {
-                text: "turn your ideas into something",
-                accent: false,
-                newLine: false,
-              },
-              {
-                text: " meaningful.",
-                accent: true,
-              },
-            ]}
-            tone="onPrimary"
-          />
-        </h2>
-        {gotIdea.line1 ? <ContactMeLink locale={locale} /> : null}
+    <Container
+      id="contact"
+      className="bg-primary-surface text-primary-foreground"
+    >
+      <SectionHeader
+        eyebrow={gotIdea.eyebrow ?? undefined}
+        eyebrowTone="onPrimary"
+        flush
+        actions={
+          gotIdea.form ? (
+            <ContactForm locale={locale} form={gotIdea.form} />
+          ) : undefined
+        }
+      >
+        <div className="flex flex-col gap-10 md:gap-16">
+          <div className="min-w-0">
+            <h2
+              id="got-idea-heading"
+              className={cn(sectionHeadingClassName, "max-w-4xl lg:max-w-5xl")}
+            >
+              <HeadlineSegments segments={gotIdea.headline} tone="onPrimary" />
+            </h2>
+          </div>
+          {imageSrc ? (
+            <ParallaxImage
+              src={imageSrc}
+              alt=""
+              containerClassName="mx-auto h-[300px] w-[300px] grayscale hover:grayscale-0 transition-all duration-300 lg:mx-0"
+            />
+          ) : null}
+        </div>
       </SectionHeader>
     </Container>
   );

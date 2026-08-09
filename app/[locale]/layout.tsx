@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { Bebas_Neue, Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 
-import { LocaleBanner } from "@/components/i18n/LocaleBanner";
+import { Footer } from "@/components/layout/Footer/Footer";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { locales, resolveLocaleParam } from "@/lib/i18n/config";
+import { siteBaseUrl } from "@/lib/site-url";
 
 import "../globals.css";
-import { Footer } from "@/components/layout/Footer/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -21,10 +21,28 @@ const bebasNeue = Bebas_Neue({
   weight: "400",
 });
 
+const siteDescription =
+  "Digital workshop where idea meets product. Mobile and web applications for your business.";
+
 export const metadata: Metadata = {
-  title: "Bartosz Janiuk",
-  description:
-    "Digital workshop where idea meets product. Mobile and web applications for your business.",
+  metadataBase: new URL(siteBaseUrl()),
+  title: {
+    default: "Bartosz Janiuk",
+    template: "%s | Bartosz Janiuk",
+  },
+  description: siteDescription,
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "Bartosz Janiuk",
+    title: "Bartosz Janiuk",
+    description: siteDescription,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bartosz Janiuk",
+    description: siteDescription,
+  },
 };
 
 export function generateStaticParams() {
@@ -56,7 +74,6 @@ export default async function LocaleLayout({
           enableSystem={true}
           storageKey="theme-mode"
         >
-          <LocaleBanner locale={locale} />
           {children}
           <Footer locale={locale} />
         </ThemeProvider>

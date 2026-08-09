@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header/Header";
 import { AboutMeSection } from "@/features/Homepage/AboutMeSection";
 import { ExperienceSection } from "@/features/Homepage/ExperienceSection";
 import { ContactMeSection } from "@/features/Homepage/ContactMe/ContactMe";
+import { FaqSection } from "@/features/Homepage/Faq/FaqSection";
 import { HomeJsonLd } from "@/features/Homepage/HomeJsonLd";
 import { Introduction } from "@/features/Homepage/Introduction";
 import { ListedProjectsSection } from "@/features/Homepage/ListedProjectsSection";
@@ -75,6 +76,7 @@ export default async function Home({
     projectsSection,
     experienceSection,
     techStackSection,
+    faqSection,
     gotIdea,
   } = homePage;
 
@@ -104,6 +106,7 @@ export default async function Home({
           {techStackSection ? (
             <TechStackSection techStackSection={techStackSection} />
           ) : null}
+          {faqSection ? <FaqSection faqSection={faqSection} /> : null}
           {gotIdea ? (
             <ContactMeSection locale={locale} gotIdea={gotIdea} />
           ) : null}

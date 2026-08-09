@@ -13,10 +13,18 @@ export type RawNavItem = {
   href: string;
 };
 
+const DEFAULT_NAV_ITEMS: RawNavItem[] = [
+  { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
+  { label: "Experience", href: "#experience" },
+  { label: "Tech Stack", href: "#tech-stack" },
+  { label: "Contact", href: "#contact" },
+];
+
 export function resolveNavItems(
   navItems: SiteSettingsNavItem[] | null,
 ): RawNavItem[] {
-  if (!navItems?.length) return [];
+  if (!navItems?.length) return DEFAULT_NAV_ITEMS;
   return navItems.flatMap((item) => {
     const label = item.label?.trim();
     const href = item.href?.trim();

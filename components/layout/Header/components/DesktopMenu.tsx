@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { LanguageToggle } from "../../LanguageToggle";
 import { ThemeToggle } from "../../ThemeToggle";
 import { type Locale } from "@/lib/i18n/config";
 import { ResolvedNavItem } from "../Header.types";
@@ -54,6 +55,7 @@ export function DesktopMenu({ locale, navItems }: DesktopMenuProps) {
         );
       })}
       <div className="ml-2 flex items-center gap-1">
+        <LanguageToggle />
         <ThemeToggle />
       </div>
     </div>

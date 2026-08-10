@@ -1,4 +1,4 @@
-const SITE_URL_FALLBACK = "https://bartoszjaniuk.pl";
+const SITE_URL_FALLBACK = "https://bjaniuk.com";
 
 /** Absolute site origin without trailing slash. */
 export function siteBaseUrl(): string {

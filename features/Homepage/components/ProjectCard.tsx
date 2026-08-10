@@ -9,15 +9,21 @@ export type ProjectCardProps = {
   className?: string;
 };
 
-export function ProjectCard({ project, className }: ProjectCardProps) {
+function isProjectsListingStub(href: string): boolean {
   return (
-    <Link
-      href={project.href}
-      className={cn(
-        "group focus-visible:ring-ring focus-visible:ring-offset-background block focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
-        className,
-      )}
-    >
+    href === "/projects" ||
+    href.endsWith("/projects") ||
+    /\/(en|pl)\/projects\/?$/.test(href)
+  );
+}
+
+export function ProjectCard({ project, className }: ProjectCardProps) {
+  const imageAlt = project.category
+    ? `${project.title} — ${project.category}`
+    : project.title;
+
+  const media = (
+    <>
       <div
         className={cn(
           "relative aspect-video w-full overflow-hidden",
@@ -26,7 +32,7 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
       >
         <RevealImage
           src={project.image}
-          alt=""
+          alt={imageAlt}
           fill
           sizes="(max-width: 768px) 100vw, min(420px, 42vw)"
           className="absolute inset-0"
@@ -39,6 +45,21 @@ export function ProjectCard({ project, className }: ProjectCardProps) {
           <span className="text-muted-foreground"> – {project.category}</span>
         ) : null}
       </p>
+    </>
+  );
+
+  const sharedClassName = cn(
+    "group focus-visible:ring-ring focus-visible:ring-offset-background block focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
+    className,
+  );
+
+  if (isProjectsListingStub(project.href)) {
+    return <div className={sharedClassName}>{media}</div>;
+  }
+
+  return (
+    <Link href={project.href} className={sharedClassName}>
+      {media}
     </Link>
   );
 }

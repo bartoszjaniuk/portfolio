@@ -21,6 +21,10 @@ export const ContactMeSection = ({
   gotIdea,
 }: ContactMeSectionProps) => {
   const imageSrc = cmsImageUrl(gotIdea.image, { width: 600 });
+  const imageAlt =
+    locale === "pl"
+      ? "Kontakt — zdjęcie przestrzeni roboczej"
+      : "Contact — workspace photo";
 
   return (
     <Container
@@ -49,7 +53,7 @@ export const ContactMeSection = ({
           {imageSrc ? (
             <ParallaxImage
               src={imageSrc}
-              alt=""
+              alt={imageAlt}
               containerClassName="mx-auto h-[300px] w-[300px] grayscale hover:grayscale-0 transition-all duration-300 lg:mx-0"
             />
           ) : null}

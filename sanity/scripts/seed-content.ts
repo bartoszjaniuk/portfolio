@@ -428,7 +428,6 @@ export const siteSettingsSeed = {
       href: '#experience',
       label: {en: 'Experience', pl: 'Doświadczenie'} satisfies LocalizedString,
     },
-    {href: '#offer', label: {en: 'Offer', pl: 'Oferta'} satisfies LocalizedString},
     {href: '#contact', label: {en: 'Contact', pl: 'Kontakt'} satisfies LocalizedString},
   ],
   socialLinks: [
@@ -446,7 +445,7 @@ export const siteSettingsSeed = {
   statusLabel: {en: 'open to work', pl: 'otwarty na pracę'} satisfies LocalizedString,
   person: {
     name: 'Bartosz Janiuk',
-    url: 'https://bartoszjaniuk.pl',
+    url: 'https://bjaniuk.com',
     image: '/developer.webp',
     sameAs: [
       'https://github.com/bartoszjaniuk',
@@ -603,7 +602,7 @@ export const experienceItems = [
       en: 'Freelance | Racibórz, Poland',
       pl: 'Freelance | Racibórz, Polska',
     } satisfies LocalizedString,
-    companyUrl: 'https://bartoszjaniuk.pl',
+    companyUrl: 'https://bjaniuk.com',
     role: {en: 'Frontend Engineer'} satisfies LocalizedString,
     range: '11/2021 — PRESENT',
     sortOrder: 2,

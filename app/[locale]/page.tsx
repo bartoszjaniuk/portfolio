@@ -93,7 +93,12 @@ export default async function Home({
             statusLabel={siteSettings.statusLabel}
           />
           {intro ? <Introduction locale={locale} intro={intro} /> : null}
-          {about ? <AboutMeSection about={about} /> : null}
+          {about ? (
+            <AboutMeSection
+              about={about}
+              personName={siteSettings.person?.name}
+            />
+          ) : null}
           {projectsSection ? (
             <ListedProjectsSection
               locale={locale}

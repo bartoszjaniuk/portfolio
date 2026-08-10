@@ -12,6 +12,7 @@
     "seed": "bun run scripts/seed-homepage.ts",
     "patch-contact-chrome": "bun run scripts/patch-contact-chrome.ts",
     "patch-faq": "bun run scripts/patch-faq.ts",
+    "patch-nav-launch": "bun run scripts/patch-nav-launch.ts",
     "start": "sanity start"
   },
   "keywords": [

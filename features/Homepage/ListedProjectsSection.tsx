@@ -1,9 +1,7 @@
-import Link from "next/link";
-
 import { Container } from "@/components/layout/Container";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { sectionHeadingClassName } from "@/components/ui/section-header";
-import { localizeHref, type Locale } from "@/lib/i18n/config";
+import type { Locale } from "@/lib/i18n/config";
 import type {
   HeadlineSegment,
   HomePageData,
@@ -32,12 +30,10 @@ export const ListedProjectsSection = ({
   return (
     <Container id="projects" aria-label="Selected works">
       <ProjectsHeading
-        locale={locale}
         headingId="selected-works-heading"
         eyebrow={projectsSection.eyebrow}
         headline={projectsSection.headline}
         description={projectsSection.description}
-        seeAll={projectsSection.seeAll}
       />
 
       <ul className="flex flex-col gap-10 md:hidden">
@@ -61,29 +57,19 @@ export const ListedProjectsSection = ({
   );
 };
 
-/**
- * Constantine-style header: eyebrow left, headline + body + text link right.
- */
 function ProjectsHeading({
-  locale,
   headingId,
   flush = false,
   eyebrow,
   headline,
   description,
-  seeAll,
 }: {
-  locale: Locale;
   headingId?: string;
   flush?: boolean;
   eyebrow: string | null;
   headline: HeadlineSegment[] | null;
   description: string | null;
-  seeAll: NonNullable<HomePageData["projectsSection"]>["seeAll"];
 }) {
-  const seeAllHref =
-    seeAll?.href && seeAll.label ? localizeHref(locale, seeAll.href) : null;
-
   return (
     <header className={cn(!flush && "mb-10 sm:mb-14")}>
       <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between md:gap-10 lg:gap-16">
@@ -99,21 +85,11 @@ function ProjectsHeading({
             <HeadlineSegments segments={headline} />
           </h2>
 
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
-            {description ? (
-              <p className="text-muted-foreground max-w-md text-sm leading-relaxed sm:text-base">
-                {description}
-              </p>
-            ) : null}
-            {seeAllHref && seeAll?.label ? (
-              <Link
-                href={seeAllHref}
-                className="text-foreground focus-visible:ring-ring/50 hover:text-primary w-fit shrink-0 self-start text-sm font-medium tracking-wide uppercase underline underline-offset-4 transition-colors focus-visible:rounded-sm focus-visible:ring-2 focus-visible:outline-none sm:self-auto sm:text-base"
-              >
-                {seeAll.label}
-              </Link>
-            ) : null}
-          </div>
+          {description ? (
+            <p className="text-muted-foreground max-w-md text-sm leading-relaxed sm:text-base">
+              {description}
+            </p>
+          ) : null}
         </div>
       </div>
     </header>

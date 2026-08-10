@@ -32,9 +32,10 @@ export async function sendContactEmail(
     console.error("CONTACT_EMAIL_TO is not set");
     return { ok: false, error: messages.configError };
   }
-  //adres na Twojej zweryfikowanej domenie w Resend. Do czasu weryfikacji domeny możesz użyć onboarding@resend.dev (tylko wysyłka do właściciela konta).
+  // Production sender on the verified Resend domain (bjaniuk.com).
+  // Until DNS verification completes, Resend may reject sends — see docs/launch-domain.md.
   const { error } = await resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: "Contact <noreply@bjaniuk.com>",
     to,
     replyTo: email,
     subject,

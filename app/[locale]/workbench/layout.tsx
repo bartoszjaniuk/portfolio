@@ -10,6 +10,7 @@ import { getSiteSettings } from "@/lib/sanity/fetchers/get-site-settings";
 export const metadata: Metadata = {
   title: "Workbench | Bartosz Janiuk",
   description: "Animation workbench for landing page experiments.",
+  robots: { index: false, follow: false },
 };
 
 /**

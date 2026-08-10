@@ -17,6 +17,13 @@ const homePageTemplates: Template[] = languages.map((locale) => ({
   value: {language: locale.id},
 }))
 
+const notFoundPageTemplates: Template[] = languages.map((locale) => ({
+  id: `notFoundPage-${locale.id}`,
+  title: `404 Page (${locale.title})`,
+  schemaType: 'notFoundPage',
+  value: {language: locale.id},
+}))
+
 export default defineConfig({
   name: 'default',
   title: 'portfolio',
@@ -29,8 +36,8 @@ export default defineConfig({
     visionTool(),
     documentInternationalization({
       supportedLanguages: languages,
-      schemaTypes: ['homePage'],
-      // Explicit homePage templates below; disable plugin duplicates with the same IDs.
+      schemaTypes: ['homePage', 'notFoundPage'],
+      // Explicit templates below; disable plugin duplicates with the same IDs.
       addTemplates: false,
     }),
     internationalizedArray({
@@ -48,7 +55,9 @@ export default defineConfig({
           (item) =>
             item.templateId !== 'siteSettings' &&
             item.templateId !== 'homePage' &&
-            !item.templateId?.startsWith('homePage-'),
+            !item.templateId?.startsWith('homePage-') &&
+            item.templateId !== 'notFoundPage' &&
+            !item.templateId?.startsWith('notFoundPage-'),
         )
       }
       return prev
@@ -57,6 +66,6 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
-    templates: (prev) => [...prev, ...homePageTemplates],
+    templates: (prev) => [...prev, ...homePageTemplates, ...notFoundPageTemplates],
   },
 })

@@ -12,13 +12,16 @@ import { cmsImageUrl } from "./utils/cms-media";
 
 export type AboutMeSectionProps = {
   about: NonNullable<HomePageData["about"]>;
+  personName?: string | null;
 };
 
-export const AboutMeSection = ({ about }: AboutMeSectionProps) => {
+export const AboutMeSection = ({ about, personName }: AboutMeSectionProps) => {
   const paragraphs = about.paragraphs ?? [];
   const portraitSrc = cmsImageUrl(about.portraitImage, { width: 400 });
   const wideSrc = cmsImageUrl(about.wideImage, { width: 1400 });
   const [firstParagraph, ...restParagraphs] = paragraphs;
+  const portraitAlt = personName?.trim() || "Bartosz Janiuk";
+  const wideAlt = `${portraitAlt} — portrait`;
 
   return (
     <Container
@@ -61,7 +64,7 @@ export const AboutMeSection = ({ about }: AboutMeSectionProps) => {
           {portraitSrc ? (
             <ParallaxImage
               src={portraitSrc}
-              alt=""
+              alt={portraitAlt}
               containerClassName="mx-auto h-[200px] w-[200px] lg:mx-0"
             />
           ) : null}
@@ -85,7 +88,7 @@ export const AboutMeSection = ({ about }: AboutMeSectionProps) => {
         <div className="flex items-center justify-center">
           <ParallaxImage
             src={wideSrc}
-            alt=""
+            alt={wideAlt}
             containerClassName="aspect-square h-auto w-full max-w-[700px]"
           />
         </div>

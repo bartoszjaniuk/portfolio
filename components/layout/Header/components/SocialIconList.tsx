@@ -7,7 +7,6 @@ import {
   XLogoIcon,
   type Icon,
 } from "@phosphor-icons/react";
-import { cn } from "@/lib/utils";
 import { ResolvedSocialLink } from "../Header.types";
 
 const SOCIAL_ICONS: Record<string, Icon> = {
@@ -68,42 +67,5 @@ export function SocialIconList({ links, variant }: SocialIconListProps) {
         );
       })}
     </>
-  );
-}
-
-type HamburgerButtonProps = {
-  isOpen: boolean;
-  onClick: () => void;
-};
-
-export function HamburgerButton({ isOpen, onClick }: HamburgerButtonProps) {
-  return (
-    <button
-      onClick={onClick}
-      className="border-border bg-card/50 hover:bg-secondary flex h-10 w-10 items-center justify-center rounded-lg border transition-colors md:hidden"
-      aria-label="Toggle menu"
-      aria-expanded={isOpen}
-    >
-      <div className="flex w-5 flex-col gap-1.5">
-        <span
-          className={cn(
-            "bg-foreground h-0.5 origin-center transition-all duration-300",
-            isOpen ? "w-5 translate-y-2 rotate-45" : "w-5",
-          )}
-        />
-        <span
-          className={cn(
-            "bg-foreground h-0.5 w-3.5 transition-all duration-300",
-            isOpen && "translate-x-2 opacity-0",
-          )}
-        />
-        <span
-          className={cn(
-            "bg-foreground h-0.5 origin-center transition-all duration-300",
-            isOpen ? "w-5 -translate-y-2 -rotate-45" : "w-5",
-          )}
-        />
-      </div>
-    </button>
   );
 }

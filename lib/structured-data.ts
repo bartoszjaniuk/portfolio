@@ -18,8 +18,8 @@ const DEFAULT_PERSON_NAME = "Bartosz Janiuk";
 const DEFAULT_WEBSITE_DESCRIPTION =
   "Digital workshop where idea meets product. Mobile and web applications for your business.";
 const DEFAULT_AUTHOR_URL = "https://github.com/bartoszjaniuk";
-const DEFAULT_PERSON_URL = "https://bartoszjaniuk.pl";
-const DEFAULT_PERSON_IMAGE = "https://bartoszjaniuk.pl/developer-portrait.png";
+const DEFAULT_PERSON_URL = "https://bjaniuk.com";
+const DEFAULT_PERSON_IMAGE = "https://bjaniuk.com/developer.webp";
 const DEFAULT_SAME_AS = [
   "https://github.com/bartoszjaniuk",
   "https://twitter.com/bartoszjaniuk",
@@ -51,14 +51,6 @@ export function generateWebsiteStructuredData(
       "@type": "Person",
       name: authorName,
       url: authorUrl,
-    },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${url}/blog?search={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
     },
   };
 }

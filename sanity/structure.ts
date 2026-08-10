@@ -3,6 +3,7 @@ import {CodeBlockIcon} from '@sanity/icons/CodeBlock'
 import {CogIcon} from '@sanity/icons/Cog'
 import {HomeIcon} from '@sanity/icons/Home'
 import {ProjectsIcon} from '@sanity/icons/Projects'
+import {WarningOutlineIcon} from '@sanity/icons/WarningOutline'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 import type {ComponentType} from 'react'
 
@@ -11,6 +12,7 @@ import {sharedLanguages} from './lib/languages'
 /** Singletons + types given custom list entries — keep them out of the default type list. */
 const HIDDEN_DOCUMENT_TYPES = [
   'homePage',
+  'notFoundPage',
   'siteSettings',
   'project',
   'experience',
@@ -65,6 +67,7 @@ export const structure: StructureResolver = (S) =>
     .title('Content')
     .items([
       createLocalizedSingleton(S, 'homePage', 'Home Page', HomeIcon),
+      createLocalizedSingleton(S, 'notFoundPage', '404 Page', WarningOutlineIcon),
       createSingleton(S, 'siteSettings', 'Site Settings', CogIcon),
       S.divider(),
       S.documentTypeListItem('project').title('Projects').icon(ProjectsIcon),

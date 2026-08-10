@@ -1,5 +1,6 @@
 import {experience} from './documents/experience'
 import {homePage} from './documents/home-page'
+import {notFoundPage} from './documents/not-found-page'
 import {project} from './documents/project'
 import {siteSettings} from './documents/site-settings'
 import {techItem} from './documents/tech-item'
@@ -22,6 +23,7 @@ export const schemaTypes = [
   seoFields,
   // Documents
   homePage,
+  notFoundPage,
   project,
   experience,
   techItem,

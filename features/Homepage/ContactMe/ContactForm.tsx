@@ -4,12 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { startTransition, useState } from "react";
 import { useForm } from "react-hook-form";
 
+import { TurnstileField } from "@/components/security/TurnstileField";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { sendContactEmail } from "@/lib/actions/send-contact-email";
 import type { Locale } from "@/lib/i18n/config";
 import type { HomePageData } from "@/lib/sanity/fetchers/get-home-page";
 import {
   createContactSchema,
+  getContactServerMessages,
   type ContactFormData,
 } from "@/lib/schemas/contact";
 import { cn } from "@/lib/utils";
@@ -42,17 +44,39 @@ const errorClassName = "mt-1 text-xs text-red-400";
 export function ContactForm({ locale, form }: ContactFormProps) {
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [serverError, setServerError] = useState<string | null>(null);
+  const [hasTurnstileToken, setHasTurnstileToken] = useState(false);
+  const [turnstileKey, setTurnstileKey] = useState(0);
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const messages = getContactServerMessages(locale);
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ContactFormData>({
     resolver: zodResolver(createContactSchema(locale)),
+    defaultValues: {
+      email: "",
+      subject: "",
+      message: "",
+      turnstileToken: "",
+    },
   });
 
   const isPending = status === "pending";
+  const canSubmit = Boolean(siteKey && hasTurnstileToken && !isPending);
+
+  const clearTurnstileToken = () => {
+    setValue("turnstileToken", "", { shouldValidate: false });
+    setHasTurnstileToken(false);
+  };
+
+  const refreshTurnstile = () => {
+    clearTurnstileToken();
+    setTurnstileKey((key) => key + 1);
+  };
 
   const onSubmit = (data: ContactFormData) => {
     setStatus("pending");
@@ -64,9 +88,11 @@ export function ContactForm({ locale, form }: ContactFormProps) {
       if (result.ok) {
         setStatus("success");
         reset();
+        refreshTurnstile();
       } else {
         setStatus("error");
         setServerError(result.error || form.errorFallback);
+        refreshTurnstile();
       }
     });
   };
@@ -153,6 +179,30 @@ export function ContactForm({ locale, form }: ContactFormProps) {
         )}
       </div>
 
+      <div>
+        {siteKey ? (
+          <TurnstileField
+            key={turnstileKey}
+            siteKey={siteKey}
+            onSuccess={(token) => {
+              setValue("turnstileToken", token, { shouldValidate: true });
+              setHasTurnstileToken(true);
+            }}
+            onExpire={clearTurnstileToken}
+            onError={clearTurnstileToken}
+          />
+        ) : (
+          <p role="alert" className="text-sm text-red-400">
+            {messages.configError}
+          </p>
+        )}
+        {errors.turnstileToken && (
+          <p role="alert" className={errorClassName}>
+            {errors.turnstileToken.message}
+          </p>
+        )}
+      </div>
+
       {serverError && (
         <p role="alert" className="text-sm text-red-400">
           {serverError}
@@ -162,7 +212,7 @@ export function ContactForm({ locale, form }: ContactFormProps) {
       <MagneticButton
         type="submit"
         size="lg"
-        disabled={isPending}
+        disabled={!canSubmit}
         className="border-primary-foreground/30 bg-primary-foreground/10 text-primary-foreground hover:bg-primary-foreground hover:text-primary w-full sm:w-auto"
       >
         <span className="relative z-10">

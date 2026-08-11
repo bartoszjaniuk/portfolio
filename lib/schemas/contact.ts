@@ -10,6 +10,8 @@ const contactMessages = {
     invalidForm: "Invalid form data. Please check your inputs.",
     configError: "Server configuration error.",
     sendFailed: "Failed to send the message. Please try again.",
+    captchaRequired: "Please complete the security check.",
+    captchaFailed: "Security check failed. Please try again.",
   },
   pl: {
     email: "Podaj prawidłowy adres e-mail",
@@ -18,6 +20,9 @@ const contactMessages = {
     invalidForm: "Nieprawidłowe dane formularza. Sprawdź pola.",
     configError: "Błąd konfiguracji serwera.",
     sendFailed: "Nie udało się wysłać wiadomości. Spróbuj ponownie.",
+    captchaRequired: "Ukończ weryfikację bezpieczeństwa.",
+    captchaFailed:
+      "Weryfikacja bezpieczeństwa nie powiodła się. Spróbuj ponownie.",
   },
 } as const;
 
@@ -36,6 +41,7 @@ export function createContactSchema(locale: Locale) {
     email: z.string().email(messages.email),
     subject: z.string().min(2, messages.subject),
     message: z.string().min(10, messages.message),
+    turnstileToken: z.string().min(1, messages.captchaRequired),
   });
 }
 

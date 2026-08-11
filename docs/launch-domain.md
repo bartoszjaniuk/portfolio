@@ -13,15 +13,28 @@ Canonical production URL: **https://bjaniuk.com**
 
 Set these on Vercel (Production):
 
-| Variable                        | Value                                 |
-| ------------------------------- | ------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`          | `https://bjaniuk.com`                 |
-| `NEXT_PUBLIC_SANITY_PROJECT_ID` | Sanity project id                     |
-| `NEXT_PUBLIC_SANITY_DATASET`    | `production`                          |
-| `RESEND_API_KEY`                | Resend API key                        |
-| `CONTACT_EMAIL_TO`              | Inbox that receives contact form mail |
+| Variable                         | Value                                 |
+| -------------------------------- | ------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL`           | `https://bjaniuk.com`                 |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID`  | Sanity project id                     |
+| `NEXT_PUBLIC_SANITY_DATASET`     | `production`                          |
+| `RESEND_API_KEY`                 | Resend API key                        |
+| `CONTACT_EMAIL_TO`               | Inbox that receives contact form mail |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Cloudflare Turnstile sitekey (prod)   |
+| `TURNSTILE_SECRET_KEY`           | Cloudflare Turnstile secret (prod)    |
 
 Optional: `NEXT_PUBLIC_SANITY_STUDIO_URL` for Visual Editing / Studio URL.
+
+### Turnstile widgets
+
+Create **separate** Turnstile widgets in the Cloudflare dashboard (Managed mode):
+
+| Environment | Widget hostnames                                                                                  | Keys                     |
+| ----------- | ------------------------------------------------------------------------------------------------- | ------------------------ |
+| Production  | `bjaniuk.com`, optionally `www.bjaniuk.com`                                                       | Set on Vercel Production |
+| Development | `localhost`, or [test keys](https://developers.cloudflare.com/turnstile/troubleshooting/testing/) | `.env.local` only        |
+
+Do not put `localhost` on the production widget. Server-side Siteverify also checks `action === "contact"` and an allowed hostname.
 
 ## C. Verify the sending domain in Resend
 

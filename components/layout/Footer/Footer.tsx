@@ -6,41 +6,40 @@ import {
 import { localizeHref } from "@/lib/i18n/config";
 import { getSiteSettings } from "@/lib/sanity/fetchers/get-site-settings";
 
+import { FooterBrandColumn } from "./components/FooterBrandColumn";
 import { FooterLinkList } from "./components/FooterLinkList";
 import type { FooterProps } from "./Footer.types";
-import { resolveCopyrightName, splitNavItems } from "./Footer.utils";
+import { resolveCopyrightName } from "./Footer.utils";
 
-const DEFAULT_INNER_PAGES_HEADING = "Inner Pages";
+const DEFAULT_MENU_HEADING = "Menu";
 const DEFAULT_SOCIAL_MEDIA_HEADING = "Social Media";
 const DEFAULT_COPYRIGHT_SUFFIX = "All rights reserved.";
 
 function UpperFooter({
+  brandName,
   description,
-  navCol1,
-  navCol2,
-  socialLinks,
-  innerPagesHeading,
+  menuHeading,
+  menuLinks,
   socialMediaHeading,
+  socialLinks,
 }: {
+  brandName: string;
   description: string | null;
-  navCol1: { label: string; href: string }[];
-  navCol2: { label: string; href: string }[];
-  socialLinks: { label: string; href: string }[];
-  innerPagesHeading: string;
+  menuHeading: string;
+  menuLinks: { label: string; href: string }[];
   socialMediaHeading: string;
+  socialLinks: { label: string; href: string }[];
 }) {
   return (
     <div className="bg-primary-surface text-primary-foreground">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-17.5">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
-          {description ? (
-            <p className="text-primary-foreground/70 text-sm leading-relaxed">
-              {description}
-            </p>
-          ) : null}
-
-          <FooterLinkList heading={innerPagesHeading} links={navCol1} />
-          <FooterLinkList heading={innerPagesHeading} links={navCol2} />
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.4fr)_repeat(2,minmax(0,1fr))]">
+          <FooterBrandColumn
+            brandName={brandName}
+            description={description}
+            className="sm:col-span-2 lg:col-span-1"
+          />
+          <FooterLinkList heading={menuHeading} links={menuLinks} />
           <FooterLinkList heading={socialMediaHeading} links={socialLinks} />
         </div>
       </div>
@@ -67,11 +66,10 @@ function LowerFooter({
 export async function Footer({ locale }: FooterProps) {
   const settings = await getSiteSettings(locale);
 
-  const navItems = resolveNavItems(settings?.navItems ?? null).map((item) => ({
+  const menuLinks = resolveNavItems(settings?.navItems ?? null).map((item) => ({
     label: item.label,
     href: localizeHref(locale, item.href),
   }));
-  const [navCol1, navCol2] = splitNavItems(navItems);
 
   const socialLinks = resolveSocialLinks(settings?.socialLinks ?? null).map(
     (link) => ({
@@ -89,16 +87,14 @@ export async function Footer({ locale }: FooterProps) {
   return (
     <footer>
       <UpperFooter
+        brandName={brandName}
         description={settings?.websiteDescription ?? null}
-        navCol1={navCol1}
-        navCol2={navCol2}
-        socialLinks={socialLinks}
-        innerPagesHeading={
-          settings?.footerInnerPagesHeading ?? DEFAULT_INNER_PAGES_HEADING
-        }
+        menuHeading={settings?.footerInnerPagesHeading ?? DEFAULT_MENU_HEADING}
+        menuLinks={menuLinks}
         socialMediaHeading={
           settings?.footerSocialMediaHeading ?? DEFAULT_SOCIAL_MEDIA_HEADING
         }
+        socialLinks={socialLinks}
       />
       <LowerFooter
         brandName={brandName}

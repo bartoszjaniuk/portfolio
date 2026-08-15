@@ -14,6 +14,11 @@ export type PersonStructuredDataFields = {
   worksFor?: string | null;
 };
 
+export type FaqStructuredDataItem = {
+  question: string;
+  answer: string;
+};
+
 const DEFAULT_PERSON_NAME = "Bartosz Janiuk";
 const DEFAULT_WEBSITE_DESCRIPTION =
   "Digital workshop where idea meets product. Mobile and web applications for your business.";
@@ -78,5 +83,78 @@ export function generatePersonStructuredData(
       "@type": "Organization",
       name: worksForName,
     },
+  };
+}
+
+/**
+ * Builds FAQPage JSON-LD from question/answer pairs (e.g. CMS FAQ items).
+ * Callers should pass only items with non-empty question and answer.
+ */
+export function generateFaqPageStructuredData(items: FaqStructuredDataItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
+}
+
+export type ServiceStructuredDataFields = {
+  name: string;
+  description?: string | null;
+  url: string;
+  providerName?: string | null;
+};
+
+/**
+ * Builds Service JSON-LD for a thin service landing page.
+ */
+export function generateServiceStructuredData(
+  fields: ServiceStructuredDataFields,
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: fields.name,
+    ...(fields.description ? { description: fields.description } : {}),
+    url: fields.url,
+    provider: {
+      "@type": "Person",
+      name: fields.providerName ?? DEFAULT_PERSON_NAME,
+    },
+  };
+}
+
+export type ServiceListStructuredDataItem = {
+  name: string;
+  url: string;
+  description?: string | null;
+};
+
+/**
+ * Builds ItemList JSON-LD of offered services (homepage catalog).
+ */
+export function generateServiceItemListStructuredData(
+  items: ServiceListStructuredDataItem[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Service",
+        name: item.name,
+        url: item.url,
+        ...(item.description ? { description: item.description } : {}),
+      },
+    })),
   };
 }

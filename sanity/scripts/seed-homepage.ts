@@ -20,6 +20,7 @@ import {
   experienceItems,
   homePageByLocale,
   listedProjects,
+  servicesSeed,
   siteSettingsSeed,
   techItemCopy,
   type HeadlineSegment,
@@ -586,6 +587,19 @@ async function seedTechItems(ctx: SeedContext): Promise<string[]> {
   return ids
 }
 
+async function seedServices(ctx: SeedContext): Promise<void> {
+  for (const item of servicesSeed) {
+    await ctx.upsertFixedId(`service-${item.slug}`, 'service', {
+      slug: item.slug,
+      sortOrder: item.sortOrder,
+      title: i18nString(item.title),
+      seoTitle: i18nString(item.seoTitle),
+      seoDescription: i18nText(item.seoDescription),
+      intro: i18nText(item.intro),
+    })
+  }
+}
+
 async function seedSiteSettings(ctx: SeedContext): Promise<void> {
   const personImageId = await ctx.resolveAssetId(siteSettingsSeed.person.image)
 
@@ -616,6 +630,14 @@ async function seedSiteSettings(ctx: SeedContext): Promise<void> {
     websiteDescription: i18nText(siteSettingsSeed.websiteDescription),
     footerInnerPagesHeading: i18nString(siteSettingsSeed.footerInnerPagesHeading),
     footerSocialMediaHeading: i18nString(siteSettingsSeed.footerSocialMediaHeading),
+    footerServicesHeading: i18nString(siteSettingsSeed.footerServicesHeading),
+    footerLegalHeading: i18nString(siteSettingsSeed.footerLegalHeading),
+    footerLegalItems: siteSettingsSeed.footerLegalItems.map((item) => ({
+      _key: stableKey(`legal:${item.href}`),
+      _type: 'navItem',
+      href: item.href,
+      label: i18nString(item.label),
+    })),
     footerCopyrightSuffix: i18nString(siteSettingsSeed.footerCopyrightSuffix),
   })
 }
@@ -833,6 +855,7 @@ async function main(): Promise<void> {
   const projectIds = await seedProjects(ctx)
   const experienceIds = await seedExperiences(ctx)
   const techItemIds = await seedTechItems(ctx)
+  await seedServices(ctx)
   await seedSiteSettings(ctx)
   await seedHomePages(ctx, projectIds, experienceIds, techItemIds)
   await seedTranslationMetadata(ctx)

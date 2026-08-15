@@ -2,6 +2,7 @@ import {experience} from './documents/experience'
 import {homePage} from './documents/home-page'
 import {notFoundPage} from './documents/not-found-page'
 import {project} from './documents/project'
+import {service} from './documents/service'
 import {siteSettings} from './documents/site-settings'
 import {techItem} from './documents/tech-item'
 import {bulletList} from './objects/bullet-list'
@@ -27,5 +28,6 @@ export const schemaTypes = [
   project,
   experience,
   techItem,
+  service,
   siteSettings,
 ]

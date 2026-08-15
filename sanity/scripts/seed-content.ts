@@ -107,11 +107,107 @@ export const experienceColumnHeaders = {
 export const footerChrome = {
   footerInnerPagesHeading: {en: 'Inner Pages', pl: 'Podstrony'} satisfies LocalizedString,
   footerSocialMediaHeading: {en: 'Social Media', pl: 'Social Media'} satisfies LocalizedString,
+  footerServicesHeading: {en: 'Services', pl: 'Usługi'} satisfies LocalizedString,
+  footerLegalHeading: {en: 'Legal', pl: 'Prawne'} satisfies LocalizedString,
+  footerLegalItems: [
+    {
+      href: '/privacy',
+      label: {en: 'Privacy', pl: 'Polityka prywatności'} satisfies LocalizedString,
+    },
+    {
+      href: '/terms',
+      label: {en: 'Terms', pl: 'Regulamin'} satisfies LocalizedString,
+    },
+  ],
   footerCopyrightSuffix: {
     en: 'All rights reserved.',
     pl: 'Wszelkie prawa zastrzeżone.',
   } satisfies LocalizedString,
 } as const
+
+// ---------------------------------------------------------------------------
+// Services (SEO footer + thin landings)
+// ---------------------------------------------------------------------------
+
+export const servicesSeed = [
+  {
+    slug: 'websites',
+    sortOrder: 0,
+    title: {en: 'Websites', pl: 'Strony WWW'} satisfies LocalizedString,
+    seoTitle: {
+      en: 'Custom websites',
+      pl: 'Strony WWW na zamówienie',
+    } satisfies LocalizedString,
+    seoDescription: {
+      en: 'Fast, accessible marketing websites and landing pages built for SEO, Core Web Vitals, and conversion.',
+      pl: 'Szybkie i dostępne strony marketingowe oraz landing page’e zoptymalizowane pod SEO, Core Web Vitals i konwersję.',
+    } satisfies LocalizedString,
+    intro: {
+      en: 'I design and build modern websites that load quickly, read clearly, and turn visitors into leads. From company brochure sites to campaign landings, every page is structured for SEO, maintainability, and a polished visual presence.',
+      pl: 'Projektuję i buduję nowoczesne strony WWW, które szybko się ładują, czytelnie komunikują ofertę i zamieniają odwiedzających w leady. Od wizytówek firmowych po landingi kampanijne — każda strona powstaje z myślą o SEO, łatwym utrzymaniu i dopracowanym wyglądzie.',
+    } satisfies LocalizedString,
+  },
+  {
+    slug: 'web-applications',
+    sortOrder: 1,
+    title: {
+      en: 'Web applications',
+      pl: 'Aplikacje internetowe',
+    } satisfies LocalizedString,
+    seoTitle: {
+      en: 'Web applications',
+      pl: 'Aplikacje internetowe',
+    } satisfies LocalizedString,
+    seoDescription: {
+      en: 'Interactive web apps and dashboards with solid frontend architecture, accessible UI, and APIs ready to scale.',
+      pl: 'Interaktywne aplikacje webowe i dashboardy z solidną architekturą frontendu, dostępnym UI i API gotowym na skalowanie.',
+    } satisfies LocalizedString,
+    intro: {
+      en: 'I build browser-native products — SaaS tools, admin panels, and internal platforms — with reliable state management, clean component systems, and integrations that grow with your business.',
+      pl: 'Buduję produkty działające jak natywne w przeglądarce — narzędzia SaaS, panele administracyjne i platformy wewnętrzne — z niezawodnym zarządzaniem stanem, spójnym systemem komponentów i integracjami, które rosną razem z firmą.',
+    } satisfies LocalizedString,
+  },
+  {
+    slug: 'mobile-apps',
+    sortOrder: 2,
+    title: {
+      en: 'Mobile applications',
+      pl: 'Aplikacje mobilne',
+    } satisfies LocalizedString,
+    seoTitle: {
+      en: 'Mobile applications',
+      pl: 'Aplikacje mobilne',
+    } satisfies LocalizedString,
+    seoDescription: {
+      en: 'Cross-platform mobile apps for iOS and Android with polished UI, offline-friendly flows, and a shared React Native codebase when it fits.',
+      pl: 'Wieloplatformowe aplikacje mobilne na iOS i Androida z dopracowanym UI, obsługą offline i wspólną bazą kodu React Native, gdy to najlepszy wybór.',
+    } satisfies LocalizedString,
+    intro: {
+      en: 'I create mobile experiences that feel native on both platforms — from MVP to production — with attention to performance, offline behaviour, push-ready architecture, and a consistent design system.',
+      pl: 'Tworzę doświadczenia mobilne, które dobrze działają na obu platformach — od MVP po produkcję — z naciskiem na wydajność, tryb offline, architekturę gotową na powiadomienia push i spójny system designu.',
+    } satisfies LocalizedString,
+  },
+  {
+    slug: 'online-stores',
+    sortOrder: 3,
+    title: {
+      en: 'Online stores',
+      pl: 'Sklepy internetowe',
+    } satisfies LocalizedString,
+    seoTitle: {
+      en: 'Online stores',
+      pl: 'Sklepy internetowe',
+    } satisfies LocalizedString,
+    seoDescription: {
+      en: 'E-commerce storefronts focused on catalogue UX, conversion, and integrations with payments, inventory, and fulfilment.',
+      pl: 'Sklepy internetowe nastawione na wygodny katalog, konwersję oraz integracje z płatnościami, magazynem i realizacją zamówień.',
+    } satisfies LocalizedString,
+    intro: {
+      en: 'I help brands launch and improve online stores — clearer product discovery, smoother checkout, and the integrations that keep stock, payments, and shipping in sync.',
+      pl: 'Pomagam markom uruchamiać i rozwijać sklepy internetowe — czytelniejsze odkrywanie produktów, płynniejszy checkout oraz integracje, które trzymają stany magazynowe, płatności i wysyłki w synchronizacji.',
+    } satisfies LocalizedString,
+  },
+] as const
 
 // ---------------------------------------------------------------------------
 // FAQ (Constantine contact FAQ — applied via safe patch)

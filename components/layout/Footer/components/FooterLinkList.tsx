@@ -14,6 +14,9 @@ type FooterLinkListProps = {
   className?: string;
 };
 
+const headingClassName =
+  "mb-4 text-sm font-medium uppercase tracking-wide text-primary-foreground/50";
+
 const linkClassName =
   "text-primary-foreground/70 hover:text-primary-foreground text-sm transition-colors";
 
@@ -26,7 +29,7 @@ export function FooterLinkList({
 
   return (
     <nav aria-label={heading} className={className}>
-      <h3 className="mb-4 text-sm font-medium">{heading}</h3>
+      <h3 className={headingClassName}>{heading}</h3>
       <ul className="flex flex-col gap-2.5">
         {links.map((link) => (
           <li key={`${link.href}-${link.label}`}>

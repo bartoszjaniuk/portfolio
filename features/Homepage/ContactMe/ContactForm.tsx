@@ -1,12 +1,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { startTransition, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { TurnstileField } from "@/components/security/TurnstileField";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { sendContactEmail } from "@/lib/actions/send-contact-email";
+import { legalPagePath, privacyFormNotice } from "@/lib/content/privacy";
 import type { Locale } from "@/lib/i18n/config";
 import type { HomePageData } from "@/lib/sanity/fetchers/get-home-page";
 import {
@@ -225,6 +227,17 @@ export function ContactForm({ locale, form }: ContactFormProps) {
         ) : null}
         <span className="bg-primary-foreground absolute inset-0 z-0 -translate-x-full transition-transform duration-500 group-hover:translate-x-0" />
       </MagneticButton>
+
+      <p className="text-primary-foreground/50 text-xs leading-relaxed">
+        {privacyFormNotice[locale].beforeLink}
+        <Link
+          href={legalPagePath(locale, "privacy")}
+          className="hover:text-primary-foreground/80 underline underline-offset-2 transition-colors"
+        >
+          {privacyFormNotice[locale].linkLabel}
+        </Link>
+        {privacyFormNotice[locale].afterLink}
+      </p>
     </form>
   );
 }

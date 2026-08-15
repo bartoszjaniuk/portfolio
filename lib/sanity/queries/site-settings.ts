@@ -43,6 +43,21 @@ export const SITE_SETTINGS_QUERY = defineQuery(/* groq */ `
       footerSocialMediaHeading[language == $locale][0].value,
       footerSocialMediaHeading[language == "en"][0].value
     ),
+    "footerServicesHeading": coalesce(
+      footerServicesHeading[language == $locale][0].value,
+      footerServicesHeading[language == "en"][0].value
+    ),
+    "footerLegalHeading": coalesce(
+      footerLegalHeading[language == $locale][0].value,
+      footerLegalHeading[language == "en"][0].value
+    ),
+    footerLegalItems[]{
+      href,
+      "label": coalesce(
+        label[language == $locale][0].value,
+        label[language == "en"][0].value
+      )
+    },
     "footerCopyrightSuffix": coalesce(
       footerCopyrightSuffix[language == $locale][0].value,
       footerCopyrightSuffix[language == "en"][0].value

@@ -1,3 +1,4 @@
+import {BoltIcon} from '@sanity/icons/Bolt'
 import {CaseIcon} from '@sanity/icons/Case'
 import {CodeBlockIcon} from '@sanity/icons/CodeBlock'
 import {CogIcon} from '@sanity/icons/Cog'
@@ -17,6 +18,7 @@ const HIDDEN_DOCUMENT_TYPES = [
   'project',
   'experience',
   'techItem',
+  'service',
 ] as const
 
 function createLocalizedSingleton(
@@ -73,6 +75,7 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('project').title('Projects').icon(ProjectsIcon),
       S.documentTypeListItem('experience').title('Experience').icon(CaseIcon),
       S.documentTypeListItem('techItem').title('Tech stack').icon(CodeBlockIcon),
+      S.documentTypeListItem('service').title('Services').icon(BoltIcon),
       S.divider(),
       ...S.documentTypeListItems().filter(
         (listItem) =>

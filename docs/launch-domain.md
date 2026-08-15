@@ -65,10 +65,20 @@ bun run patch-nav-launch -- --confirm
 
 Requires `SANITY_API_WRITE_TOKEN`.
 
-## E. Crawl surfaces
+## E. Vercel Web Analytics
+
+The app includes `@vercel/analytics` (`<Analytics />` in the locale layout). Collection only starts after you enable it in the dashboard:
+
+1. Vercel → Project → **Analytics** → enable **Web Analytics**.
+2. Redeploy if the dashboard asks for it.
+3. Confirm page views appear after production traffic (no cookie banner — cookieless).
+
+Do **not** enable Speed Insights in this launch pass (separate product).
+
+## F. Crawl surfaces
 
 After deploy, verify:
 
 - https://bjaniuk.com/robots.txt — allows `/`, disallows `/*/workbench`, points at sitemap
-- https://bjaniuk.com/sitemap.xml — only `/en` and `/pl` homepage URLs
+- https://bjaniuk.com/sitemap.xml — localized home, privacy, and terms URLs
 - Workbench pages include `noindex` metadata

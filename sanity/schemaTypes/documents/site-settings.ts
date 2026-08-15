@@ -91,6 +91,25 @@ export const siteSettings = defineType({
       type: 'internationalizedArrayString',
     }),
     defineField({
+      name: 'footerServicesHeading',
+      title: 'Footer Services Heading',
+      type: 'internationalizedArrayString',
+      description: 'Column heading for services links (e.g. Services / Usługi)',
+    }),
+    defineField({
+      name: 'footerLegalHeading',
+      title: 'Footer Legal Heading',
+      type: 'internationalizedArrayString',
+      description: 'Column heading for legal links (e.g. Legal / Prawne)',
+    }),
+    defineField({
+      name: 'footerLegalItems',
+      title: 'Footer Legal Items',
+      type: 'array',
+      of: [defineArrayMember({type: 'navItem'})],
+      description: 'Privacy / Terms links shown in the footer Legal column',
+    }),
+    defineField({
       name: 'footerCopyrightSuffix',
       title: 'Footer Copyright Suffix',
       type: 'internationalizedArrayString',

@@ -179,3 +179,8 @@ export const HOME_PAGE_QUERY = defineQuery(/* groq */ `
     *[_type == "homePage" && language == "en"][0]${homePageFields}
   )
 `);
+
+/** Language + _updatedAt for all homePage docs — used by sitemap lastModified. */
+export const HOME_PAGE_UPDATED_AT_QUERY = defineQuery(/* groq */ `
+  *[_type == "homePage"] { language, _updatedAt }
+`);

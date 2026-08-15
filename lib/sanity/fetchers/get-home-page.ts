@@ -1,6 +1,9 @@
 import { isLocale, type Locale } from "@/lib/i18n/config";
 import { client } from "@/lib/sanity/client";
-import { HOME_PAGE_QUERY } from "@/lib/sanity/queries/home-page";
+import {
+  HOME_PAGE_QUERY,
+  HOME_PAGE_UPDATED_AT_QUERY,
+} from "@/lib/sanity/queries/home-page";
 
 const REVALIDATE_SECONDS = 60;
 
@@ -183,5 +186,23 @@ export async function getHomePage(
     HOME_PAGE_QUERY,
     { locale: safeLocale },
     { next: { revalidate: REVALIDATE_SECONDS } },
+  );
+}
+
+/** Map of homePage language → last Sanity update time (for sitemap). */
+export async function getHomePageUpdatedAtMap(): Promise<
+  Record<string, Date>
+> {
+  const rows = await client.fetch<
+    Array<{ language: string | null; _updatedAt: string }> | null
+  >(HOME_PAGE_UPDATED_AT_QUERY, {}, { next: { revalidate: REVALIDATE_SECONDS } });
+
+  return Object.fromEntries(
+    (rows ?? [])
+      .filter(
+        (row): row is { language: string; _updatedAt: string } =>
+          Boolean(row.language && row._updatedAt),
+      )
+      .map((row) => [row.language, new Date(row._updatedAt)]),
   );
 }

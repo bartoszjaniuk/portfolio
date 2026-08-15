@@ -32,6 +32,9 @@ export type SiteSettingsData = {
   websiteDescription: string | null;
   footerInnerPagesHeading: string | null;
   footerSocialMediaHeading: string | null;
+  footerServicesHeading: string | null;
+  footerLegalHeading: string | null;
+  footerLegalItems: SiteSettingsNavItem[] | null;
   footerCopyrightSuffix: string | null;
 };
 

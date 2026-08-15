@@ -4,7 +4,11 @@ import type {ValidationContext} from 'sanity'
  * Async uniqueness check that excludes both the published and draft IDs of the
  * current document (avoids self-match after the first draft save).
  */
-export function uniqueKeyAmongType(documentType: string) {
+export function uniqueFieldAmongType(
+  documentType: string,
+  fieldName: string,
+  errorMessage = `${fieldName} must be unique`,
+) {
   return async (value: string | undefined, context: ValidationContext) => {
     if (!value) return true
 
@@ -16,10 +20,15 @@ export function uniqueKeyAmongType(documentType: string) {
     const draftId = `drafts.${publishedId}`
 
     const existing = await client.fetch<number>(
-      `count(*[_type == $type && key == $key && !(_id in [$publishedId, $draftId])])`,
-      {type: documentType, key: value, publishedId, draftId},
+      `count(*[_type == $type && ${fieldName} == $value && !(_id in [$publishedId, $draftId])])`,
+      {type: documentType, value, publishedId, draftId},
     )
 
-    return existing === 0 || 'Key must be unique'
+    return existing === 0 || errorMessage
   }
+}
+
+/** Uniqueness helper for the conventional `key` field on shared documents. */
+export function uniqueKeyAmongType(documentType: string) {
+  return uniqueFieldAmongType(documentType, 'key', 'Key must be unique')
 }

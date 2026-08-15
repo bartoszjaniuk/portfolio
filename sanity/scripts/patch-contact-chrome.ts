@@ -21,6 +21,7 @@ import {
   footerChrome,
   homePageByLocale,
   scrollHintCopy,
+  servicesSeed,
   type HeadlineSegment,
   type LocalizedString,
 } from './seed-content'
@@ -116,6 +117,21 @@ function i18nString(value: LocalizedString) {
     entries.push({
       _key: 'pl',
       _type: 'internationalizedArrayStringValue',
+      language: 'pl',
+      value: value.pl,
+    })
+  }
+  return entries
+}
+
+function i18nText(value: LocalizedString) {
+  const entries = [
+    {_key: 'en', _type: 'internationalizedArrayTextValue', language: 'en', value: value.en},
+  ]
+  if (value.pl) {
+    entries.push({
+      _key: 'pl',
+      _type: 'internationalizedArrayTextValue',
       language: 'pl',
       value: value.pl,
     })
@@ -243,7 +259,11 @@ async function main(): Promise<void> {
     `SET ${HOME_PAGE_PL_ID}.experienceSection.columnHeaders`,
     `SET ${SITE_SETTINGS_ID}.footerInnerPagesHeading (en+pl)`,
     `SET ${SITE_SETTINGS_ID}.footerSocialMediaHeading (en+pl)`,
+    `SET ${SITE_SETTINGS_ID}.footerServicesHeading (en+pl)`,
+    `SET ${SITE_SETTINGS_ID}.footerLegalHeading (en+pl)`,
+    `SET ${SITE_SETTINGS_ID}.footerLegalItems (privacy + terms)`,
     `SET ${SITE_SETTINGS_ID}.footerCopyrightSuffix (en+pl)`,
+    ...servicesSeed.map((item) => `UPSERT service-${item.slug} (${item.slug})`),
   ]
 
   console.log('\nPlanned mutations (patch.set only):')
@@ -283,10 +303,33 @@ async function main(): Promise<void> {
     .set({
       footerInnerPagesHeading: i18nString(footerChrome.footerInnerPagesHeading),
       footerSocialMediaHeading: i18nString(footerChrome.footerSocialMediaHeading),
+      footerServicesHeading: i18nString(footerChrome.footerServicesHeading),
+      footerLegalHeading: i18nString(footerChrome.footerLegalHeading),
+      footerLegalItems: footerChrome.footerLegalItems.map((item) => ({
+        _key: stableKey(`legal:${item.href}`),
+        _type: 'navItem',
+        href: item.href,
+        label: i18nString(item.label),
+      })),
       footerCopyrightSuffix: i18nString(footerChrome.footerCopyrightSuffix),
     })
     .commit()
   console.log(`Patched ${SITE_SETTINGS_ID}`)
+
+  for (const item of servicesSeed) {
+    const id = `service-${item.slug}`
+    await client.createOrReplace({
+      _id: id,
+      _type: 'service',
+      slug: item.slug,
+      sortOrder: item.sortOrder,
+      title: i18nString(item.title),
+      seoTitle: i18nString(item.seoTitle),
+      seoDescription: i18nText(item.seoDescription),
+      intro: i18nText(item.intro),
+    })
+    console.log(`Upserted ${id}`)
+  }
 
   await logBefore(client)
   console.log('\nSafe patch completed successfully.')

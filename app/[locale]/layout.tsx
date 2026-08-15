@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Inter } from "next/font/google";
 import { notFound } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
 
 import { Footer } from "@/components/layout/Footer/Footer";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
@@ -77,6 +78,7 @@ export default async function LocaleLayout({
           {children}
           <Footer locale={locale} />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

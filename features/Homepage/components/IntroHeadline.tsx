@@ -25,7 +25,7 @@ export const IntroHeadline = ({
   return (
     <div className="animate-fade-in-up">
       {tagline ? <Eyebrow tone="primary">{tagline}</Eyebrow> : null}
-      <h1 className="text-3xl tracking-tight text-balance uppercase sm:text-4xl lg:text-5xl xl:text-7xl">
+      <h1 className="text-4xl tracking-tight text-balance uppercase sm:text-5xl lg:text-5xl xl:text-7xl">
         {headline}
 
         {roleList.length > 0 ? (

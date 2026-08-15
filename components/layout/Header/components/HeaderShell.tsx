@@ -38,7 +38,7 @@ export function HeaderShell({
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 right-0 left-0 z-50 bg-transparent transition-all duration-500"
+      className="fixed top-0 right-0 left-0 z-50 bg-transparent pt-[env(safe-area-inset-top)] transition-all duration-500"
     >
       <div className="px-4 sm:px-6">
         <div className="mx-auto flex max-w-7xl items-center justify-between py-4">

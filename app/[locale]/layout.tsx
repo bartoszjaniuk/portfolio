@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bebas_Neue, Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
@@ -24,6 +24,10 @@ const bebasNeue = Bebas_Neue({
 
 const siteDescription =
   "Digital workshop where idea meets product. Mobile and web applications for your business.";
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteBaseUrl()),

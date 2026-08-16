@@ -14,7 +14,15 @@ import {
   getServiceSlugs,
 } from "@/lib/sanity/fetchers/get-services";
 import { siteBaseUrl } from "@/lib/site-url";
-import { generateServiceStructuredData } from "@/lib/structured-data";
+import {
+  generateBreadcrumbStructuredData,
+  generateServiceStructuredData,
+} from "@/lib/structured-data";
+
+const HOME_LABEL: Record<Locale, string> = {
+  en: "Home",
+  pl: "Strona główna",
+};
 
 const BACK_HOME_LABEL: Record<Locale, string> = {
   en: "Back to home",
@@ -123,9 +131,21 @@ export default async function ServicePage({
     url: pageUrl,
   });
 
+  const breadcrumbStructuredData = generateBreadcrumbStructuredData([
+    {
+      name: HOME_LABEL[locale],
+      url: `${baseUrl}/${locale}`,
+    },
+    {
+      name: service.title,
+      url: pageUrl,
+    },
+  ]);
+
   return (
     <>
       <JsonLd data={serviceStructuredData} />
+      <JsonLd data={breadcrumbStructuredData} />
       <ServiceDocumentPage
         locale={locale}
         title={service.title}

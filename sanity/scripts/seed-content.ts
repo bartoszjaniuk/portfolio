@@ -1,6 +1,7 @@
 /**
  * Shared seed inventory synced from production CMS (post-restore).
- * Used by seed-homepage.ts, patch-contact-chrome.ts, and patch-faq.ts.
+ * Used by seed-homepage.ts, patch-contact-chrome.ts, patch-faq.ts,
+ * and patch-service-seo-titles.ts.
  */
 
 export type HeadlineSegment = {
@@ -135,8 +136,8 @@ export const servicesSeed = [
     sortOrder: 0,
     title: {en: 'Websites', pl: 'Strony WWW'} satisfies LocalizedString,
     seoTitle: {
-      en: 'Custom websites',
-      pl: 'Strony WWW na zamówienie',
+      en: 'Custom Websites — Freelance Next.js Developer Poland | Bartosz Janiuk',
+      pl: 'Strony WWW — Freelancer Next.js Polska | Bartosz Janiuk',
     } satisfies LocalizedString,
     seoDescription: {
       en: 'Fast, accessible marketing websites and landing pages built for SEO, Core Web Vitals, and conversion.',
@@ -155,8 +156,8 @@ export const servicesSeed = [
       pl: 'Aplikacje internetowe',
     } satisfies LocalizedString,
     seoTitle: {
-      en: 'Web applications',
-      pl: 'Aplikacje internetowe',
+      en: 'Web Applications — Freelance React & Next.js Developer Poland | Bartosz Janiuk',
+      pl: 'Aplikacje internetowe — Freelancer React i Next.js Polska | Bartosz Janiuk',
     } satisfies LocalizedString,
     seoDescription: {
       en: 'Interactive web apps and dashboards with solid frontend architecture, accessible UI, and APIs ready to scale.',
@@ -175,8 +176,8 @@ export const servicesSeed = [
       pl: 'Aplikacje mobilne',
     } satisfies LocalizedString,
     seoTitle: {
-      en: 'Mobile applications',
-      pl: 'Aplikacje mobilne',
+      en: 'Mobile Apps — Freelance React Native Developer Poland | Bartosz Janiuk',
+      pl: 'Aplikacje mobilne — Freelancer React Native Polska | Bartosz Janiuk',
     } satisfies LocalizedString,
     seoDescription: {
       en: 'Cross-platform mobile apps for iOS and Android with polished UI, offline-friendly flows, and a shared React Native codebase when it fits.',
@@ -195,8 +196,8 @@ export const servicesSeed = [
       pl: 'Sklepy internetowe',
     } satisfies LocalizedString,
     seoTitle: {
-      en: 'Online stores',
-      pl: 'Sklepy internetowe',
+      en: 'Online Stores & E-commerce — Freelance Developer Poland | Bartosz Janiuk',
+      pl: 'Sklepy internetowe i e-commerce — Freelancer Polska | Bartosz Janiuk',
     } satisfies LocalizedString,
     seoDescription: {
       en: 'E-commerce storefronts focused on catalogue UX, conversion, and integrations with payments, inventory, and fulfilment.',
@@ -357,9 +358,9 @@ const rolesPl = [
 export const homePageByLocale = {
   en: {
     seo: {
-      title: 'Bartosz Janiuk — Software Engineer',
+      title: 'Bartosz Janiuk | Web & Mobile App Developer — Software Engineer',
       description:
-        'A digital workshop where ideas are transformed into finished products. Websites and mobile apps for you and your business.',
+        'Freelance web & mobile app developer. I build fast Next.js websites, React Native mobile apps, and scalable web applications. Available for projects across Poland and remotely.',
     },
     intro: {
       tagline: 'Bartosz Janiuk — Software Engineer',
@@ -434,9 +435,9 @@ export const homePageByLocale = {
   },
   pl: {
     seo: {
-      title: 'Bartosz Janiuk — Software Engineer',
+      title: 'Bartosz Janiuk | Tworzenie Stron i Aplikacji Webowych — Software Engineer',
       description:
-        'Cyfrowy warsztat, gdzie pomysł zostaje przekuty w gotowy produkt. Strony Internetowe, aplikacje mobilne dla Ciebie i Twojej firmy.',
+        'Freelancer — tworzenie stron internetowych, aplikacji webowych i mobilnych. React, Next.js, React Native. Dostępny dla klientów z całej Polski i zdalnie.',
     },
     intro: {
       tagline: 'Bartosz Janiuk — Software Engineer',

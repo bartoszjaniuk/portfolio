@@ -110,24 +110,52 @@ export type ServiceStructuredDataFields = {
   description?: string | null;
   url: string;
   providerName?: string | null;
+  /** Geographic area served (e.g. "Poland"). Defaults to Poland. */
+  areaServed?: string | null;
 };
 
+const DEFAULT_AREA_SERVED = "Poland";
+
 /**
- * Builds Service JSON-LD for a thin service landing page.
+ * Builds ProfessionalService JSON-LD for a thin service landing page.
  */
 export function generateServiceStructuredData(
   fields: ServiceStructuredDataFields,
 ) {
   return {
     "@context": "https://schema.org",
-    "@type": "Service",
+    "@type": "ProfessionalService",
     name: fields.name,
     ...(fields.description ? { description: fields.description } : {}),
     url: fields.url,
+    areaServed: fields.areaServed?.trim() || DEFAULT_AREA_SERVED,
     provider: {
       "@type": "Person",
       name: fields.providerName ?? DEFAULT_PERSON_NAME,
     },
+  };
+}
+
+export type BreadcrumbStructuredDataItem = {
+  name: string;
+  url: string;
+};
+
+/**
+ * Builds BreadcrumbList JSON-LD for SERP breadcrumb trails.
+ */
+export function generateBreadcrumbStructuredData(
+  items: BreadcrumbStructuredDataItem[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
   };
 }
 

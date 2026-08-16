@@ -31,7 +31,7 @@ const DEFAULT_SAME_AS = [
   "https://linkedin.com/in/bartoszjaniuk",
 ];
 const DEFAULT_JOB_TITLE = "Software Engineer";
-const DEFAULT_WORKS_FOR = "Bartosz Janiuk";
+const DEFAULT_WORKS_FOR = "Freelance";
 
 /**
  * Builds WebSite JSON-LD. Pass CMS fields from `siteSettings` when available;

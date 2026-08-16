@@ -1,14 +1,7 @@
+import { legalOperator } from "@/lib/content/legal-operator";
 import { localePath, type Locale } from "@/lib/i18n/config";
 
-/**
- * Fill with CEIDG data before launch. Do not invent real values.
- * If `[EMAIL_PUBLICZNY]` stays a Gmail address, set `[DOSTAWCA_SKRZYNKI]` to Google.
- */
-export const LEGAL_OPERATOR_NAME = "[NAZWA_JDG]";
-export const LEGAL_OPERATOR_NIP = "[NIP]";
-export const LEGAL_OPERATOR_ADDRESS = "[ADRES_DZIALALNOSCI]";
-export const PRIVACY_CONTROLLER_EMAIL = "[EMAIL_PUBLICZNY]";
-export const LEGAL_INBOX_PROVIDER = "[DOSTAWCA_SKRZYNKI]";
+const { name, nip, regon, address, email, inboxProvider } = legalOperator;
 
 export type LegalPageKey = "privacy" | "terms";
 
@@ -45,8 +38,8 @@ const legalContent = {
         {
           heading: "1. Data controller",
           paragraphs: [
-            `The controller of personal data processed through bjaniuk.com is ${LEGAL_OPERATOR_NAME}, a sole trader (JDG) registered in Poland. NIP: ${LEGAL_OPERATOR_NIP}. Place of business: ${LEGAL_OPERATOR_ADDRESS}.`,
-            `Contact: ${PRIVACY_CONTROLLER_EMAIL} or the contact form on this website. No Data Protection Officer has been appointed. Data-subject requests can be sent to the controller contact above.`,
+            `The controller of personal data processed through bjaniuk.com is ${name}, a sole trader (JDG) registered in Poland. NIP: ${nip}. REGON: ${regon}. Place of business: ${address}.`,
+            `Contact: ${email} or the contact form on this website. No Data Protection Officer has been appointed. Data-subject requests can be sent to the controller contact above.`,
           ],
         },
         {
@@ -78,7 +71,7 @@ const legalContent = {
             "Resend - delivery of messages submitted through the contact form to the controller inbox.",
             "Cloudflare Turnstile - antispam and bot-protection verification for the contact form.",
             "Sanity - CMS and content/image delivery for public website content.",
-            `${LEGAL_INBOX_PROVIDER} - storage and handling of received contact messages in the controller inbox.`,
+            `${inboxProvider} - storage and handling of received contact messages in the controller inbox.`,
           ],
         },
         {
@@ -109,7 +102,7 @@ const legalContent = {
           heading: "8. Your rights",
           paragraphs: [
             "Under the GDPR, you may request access to your data, rectification, erasure, restriction of processing, data portability, and object to processing based on legitimate interests. If processing were ever based on consent, you would also have the right to withdraw that consent at any time.",
-            `Requests can be sent to ${PRIVACY_CONTROLLER_EMAIL}. The controller may need additional information to confirm your identity before fulfilling a request.`,
+            `Requests can be sent to ${email}. The controller may need additional information to confirm your identity before fulfilling a request.`,
             "You also have the right to lodge a complaint with a supervisory authority. In Poland, this is the President of the Personal Data Protection Office (UODO).",
           ],
         },
@@ -144,7 +137,7 @@ const legalContent = {
         {
           heading: "1. Service provider",
           paragraphs: [
-            `The website bjaniuk.com is operated by ${LEGAL_OPERATOR_NAME}, a sole trader (JDG) registered in Poland. NIP: ${LEGAL_OPERATOR_NIP}. Place of business: ${LEGAL_OPERATOR_ADDRESS}. Contact: ${PRIVACY_CONTROLLER_EMAIL}.`,
+            `The website bjaniuk.com is operated by ${name}, a sole trader (JDG) registered in Poland. NIP: ${nip}. REGON: ${regon}. Place of business: ${address}. Contact: ${email}.`,
             "These Terms describe the rules for using the public portfolio website as an electronic service. The website does not create user accounts, sell products, process payments, or provide a subscription service.",
           ],
         },
@@ -204,7 +197,7 @@ const legalContent = {
         {
           heading: "10. Complaints",
           paragraphs: [
-            `Complaints about the website or the contact form can be sent to ${PRIVACY_CONTROLLER_EMAIL}. Describe the issue and how we can contact you. The operator will review the complaint and respond to the email address you provide, usually within 14 days.`,
+            `Complaints about the website or the contact form can be sent to ${email}. Describe the issue and how we can contact you. The operator will review the complaint and respond to the email address you provide, usually within 14 days.`,
           ],
         },
         {
@@ -234,8 +227,8 @@ const legalContent = {
         {
           heading: "1. Administrator danych",
           paragraphs: [
-            `Administratorem danych osobowych przetwarzanych w ramach bjaniuk.com jest ${LEGAL_OPERATOR_NAME}, prowadzący jednoosobową działalność gospodarczą (JDG) w Polsce. NIP: ${LEGAL_OPERATOR_NIP}. Adres wykonywania działalności: ${LEGAL_OPERATOR_ADDRESS}.`,
-            `Kontakt: ${PRIVACY_CONTROLLER_EMAIL} albo formularz kontaktowy na tej stronie. Administrator nie wyznaczył inspektora ochrony danych. Żądania dotyczące danych osobowych można kierować na powyższy adres kontaktowy.`,
+            `Administratorem danych osobowych przetwarzanych w ramach bjaniuk.com jest ${name}, prowadzący jednoosobową działalność gospodarczą (JDG) w Polsce. NIP: ${nip}. REGON: ${regon}. Adres wykonywania działalności: ${address}.`,
+            `Kontakt: ${email} albo formularz kontaktowy na tej stronie. Administrator nie wyznaczył inspektora ochrony danych. Żądania dotyczące danych osobowych można kierować na powyższy adres kontaktowy.`,
           ],
         },
         {
@@ -267,7 +260,7 @@ const legalContent = {
             "Resend - dostarczanie wiadomości wysłanych przez formularz kontaktowy do skrzynki administratora.",
             "Cloudflare Turnstile - antyspamowa i antybotowa weryfikacja formularza kontaktowego.",
             "Sanity - CMS oraz dostarczanie publicznych treści i obrazów strony.",
-            `${LEGAL_INBOX_PROVIDER} - przechowywanie i obsługa odebranych wiadomości kontaktowych w skrzynce administratora.`,
+            `${inboxProvider} - przechowywanie i obsługa odebranych wiadomości kontaktowych w skrzynce administratora.`,
           ],
         },
         {
@@ -298,7 +291,7 @@ const legalContent = {
           heading: "8. Twoje prawa",
           paragraphs: [
             "Na podstawie RODO możesz żądać dostępu do swoich danych, ich sprostowania, usunięcia, ograniczenia przetwarzania, przenoszenia danych oraz wnieść sprzeciw wobec przetwarzania opartego na prawnie uzasadnionym interesie. Jeżeli jakiekolwiek przetwarzanie byłoby kiedykolwiek oparte na zgodzie, przysługiwałoby Ci także prawo jej cofnięcia w dowolnym momencie.",
-            `Żądania można kierować na ${PRIVACY_CONTROLLER_EMAIL}. Administrator może potrzebować dodatkowych informacji w celu potwierdzenia Twojej tożsamości przed realizacją żądania.`,
+            `Żądania można kierować na ${email}. Administrator może potrzebować dodatkowych informacji w celu potwierdzenia Twojej tożsamości przed realizacją żądania.`,
             "Masz także prawo złożyć skargę do organu nadzorczego. W Polsce jest nim Prezes Urzędu Ochrony Danych Osobowych (UODO).",
           ],
         },
@@ -333,7 +326,7 @@ const legalContent = {
         {
           heading: "1. Usługodawca",
           paragraphs: [
-            `Strona bjaniuk.com jest prowadzona przez ${LEGAL_OPERATOR_NAME}, prowadzącego jednoosobową działalność gospodarczą (JDG) w Polsce. NIP: ${LEGAL_OPERATOR_NIP}. Adres wykonywania działalności: ${LEGAL_OPERATOR_ADDRESS}. Kontakt: ${PRIVACY_CONTROLLER_EMAIL}.`,
+            `Strona bjaniuk.com jest prowadzona przez ${name}, prowadzącego jednoosobową działalność gospodarczą (JDG) w Polsce. NIP: ${nip}. REGON: ${regon}. Adres wykonywania działalności: ${address}. Kontakt: ${email}.`,
             "Niniejszy regulamin opisuje zasady korzystania z publicznej strony portfolio jako usługi świadczonej drogą elektroniczną. Strona nie tworzy kont użytkowników, nie sprzedaje produktów, nie obsługuje płatności i nie świadczy usługi subskrypcyjnej.",
           ],
         },
@@ -393,7 +386,7 @@ const legalContent = {
         {
           heading: "10. Reklamacje",
           paragraphs: [
-            `Reklamacje dotyczące strony albo formularza kontaktowego można zgłaszać na ${PRIVACY_CONTROLLER_EMAIL}. Opisz problem i sposób kontaktu. Operator rozpatrzy reklamację i odpowie na podany adres e-mail, zwykle w ciągu 14 dni.`,
+            `Reklamacje dotyczące strony albo formularza kontaktowego można zgłaszać na ${email}. Opisz problem i sposób kontaktu. Operator rozpatrzy reklamację i odpowie na podany adres e-mail, zwykle w ciągu 14 dni.`,
           ],
         },
         {

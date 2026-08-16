@@ -54,7 +54,6 @@ html {
 }
 
 :root {
-  /* Constantine Light — sampled from constantine.framer.ai + WCAG-tuned muted */
   --background: #eeede4;
   --foreground: #000000;
   --card: #ffffff;

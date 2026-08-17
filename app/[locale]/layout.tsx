@@ -73,10 +73,6 @@ export default async function LocaleLayout({
       className={`${inter.variable} ${bebasNeue.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <head>
-        <link rel="preconnect" href="https://cdn.sanity.io" />
-        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
-      </head>
       <body className="font-sans antialiased">
         <ThemeProvider
           attribute="class"

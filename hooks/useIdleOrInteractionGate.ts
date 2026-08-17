@@ -3,12 +3,7 @@ import { useEffect, useState } from "react";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useSaveData } from "@/hooks/useSaveData";
 
-const INTERACTION_EVENTS = [
-  "pointerdown",
-  "touchstart",
-  "keydown",
-  "scroll",
-] as const;
+const INTERACTION_EVENTS = ["pointerdown", "touchstart", "keydown"] as const;
 
 const IDLE_TIMEOUT_MS = 2000;
 

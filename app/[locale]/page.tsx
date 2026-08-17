@@ -22,6 +22,8 @@ import { getServices } from "@/lib/sanity/fetchers/get-services";
 import { getSiteSettings } from "@/lib/sanity/fetchers/get-site-settings";
 import { siteBaseUrl } from "@/lib/site-url";
 
+export const revalidate = 3600;
+
 export async function generateMetadata({
   params,
 }: {

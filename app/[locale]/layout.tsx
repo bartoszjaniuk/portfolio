@@ -13,7 +13,8 @@ import "../globals.css";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "700"],
+  display: "optional",
 });
 
 const bebasNeue = Bebas_Neue({
@@ -72,6 +73,10 @@ export default async function LocaleLayout({
       className={`${inter.variable} ${bebasNeue.variable} h-full antialiased`}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="preconnect" href="https://cdn.sanity.io" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+      </head>
       <body className="font-sans antialiased">
         <ThemeProvider
           attribute="class"

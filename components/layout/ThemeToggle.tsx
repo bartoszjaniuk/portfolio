@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import * as React from "react";
-import { SunIcon, MoonIcon, MonitorIcon } from "@phosphor-icons/react";
+import { SunIcon, MoonIcon, MonitorIcon } from "@phosphor-icons/react/dist/ssr";
 import { cn } from "@/lib/utils";
 
 export function ThemeToggle() {

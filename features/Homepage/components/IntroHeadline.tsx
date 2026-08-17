@@ -23,9 +23,13 @@ export const IntroHeadline = ({
   const longestRole = getLongestText(roleList);
 
   return (
-    <div className="animate-fade-in-up">
-      {tagline ? <Eyebrow tone="primary">{tagline}</Eyebrow> : null}
-      <h1 className="text-4xl tracking-tight text-balance uppercase sm:text-5xl lg:text-5xl xl:text-7xl">
+    <div>
+      {tagline ? (
+        <Eyebrow tone="primary" className="animate-fade-in-up">
+          {tagline}
+        </Eyebrow>
+      ) : null}
+      <h1 className="animate-rise-in text-4xl tracking-tight text-balance uppercase sm:text-5xl lg:text-5xl xl:text-7xl">
         {headline}
 
         {roleList.length > 0 ? (

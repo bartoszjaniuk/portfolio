@@ -1,12 +1,12 @@
 "use client";
 
+import type { Icon } from "@phosphor-icons/react/lib";
 import {
   GithubLogoIcon,
   LinkedinLogoIcon,
   LinkSimpleIcon,
   XLogoIcon,
-  type Icon,
-} from "@phosphor-icons/react";
+} from "@phosphor-icons/react/dist/ssr";
 import { ResolvedSocialLink } from "../Header.types";
 
 const SOCIAL_ICONS: Record<string, Icon> = {

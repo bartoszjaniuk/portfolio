@@ -1,6 +1,6 @@
 "use client";
 
-import { PlusIcon } from "@phosphor-icons/react";
+import { PlusIcon } from "@phosphor-icons/react/dist/ssr";
 import { Accordion } from "radix-ui";
 
 import { cn } from "@/lib/utils";

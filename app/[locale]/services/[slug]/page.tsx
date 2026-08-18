@@ -9,6 +9,7 @@ import {
   locales,
   type Locale,
 } from "@/lib/i18n/config";
+import { localSeoAreaServed } from "@/lib/local-seo";
 import {
   getServiceBySlug,
   getServiceSlugs,
@@ -33,6 +34,8 @@ const CONTACT_CTA_LABEL: Record<Locale, string> = {
   en: "Contact me about this service →",
   pl: "Skontaktuj się w sprawie tej usługi →",
 };
+
+export const revalidate = 300;
 
 function servicePath(locale: Locale, slug: string): string {
   return `/${locale}/services/${slug}`;
@@ -129,6 +132,7 @@ export default async function ServicePage({
     name: service.title,
     description,
     url: pageUrl,
+    areaServed: locale === "pl" ? [...localSeoAreaServed] : "Poland",
   });
 
   const breadcrumbStructuredData = generateBreadcrumbStructuredData([

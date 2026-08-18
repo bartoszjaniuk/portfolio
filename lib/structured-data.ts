@@ -86,6 +86,18 @@ export function generatePersonStructuredData(
   };
 }
 
+type AreaServedStructuredData = string | string[] | null | undefined;
+
+function normalizeAreaServed(areaServed: AreaServedStructuredData) {
+  if (Array.isArray(areaServed)) {
+    const values = areaServed.map((value) => value.trim()).filter(Boolean);
+    if (values.length === 0) return DEFAULT_AREA_SERVED;
+    return values.length === 1 ? values[0] : values;
+  }
+
+  return areaServed?.trim() || DEFAULT_AREA_SERVED;
+}
+
 /**
  * Builds FAQPage JSON-LD from question/answer pairs (e.g. CMS FAQ items).
  * Callers should pass only items with non-empty question and answer.
@@ -111,7 +123,7 @@ export type ServiceStructuredDataFields = {
   url: string;
   providerName?: string | null;
   /** Geographic area served (e.g. "Poland"). Defaults to Poland. */
-  areaServed?: string | null;
+  areaServed?: AreaServedStructuredData;
 };
 
 const DEFAULT_AREA_SERVED = "Poland";
@@ -128,7 +140,7 @@ export function generateServiceStructuredData(
     name: fields.name,
     ...(fields.description ? { description: fields.description } : {}),
     url: fields.url,
-    areaServed: fields.areaServed?.trim() || DEFAULT_AREA_SERVED,
+    areaServed: normalizeAreaServed(fields.areaServed),
     provider: {
       "@type": "Person",
       name: fields.providerName ?? DEFAULT_PERSON_NAME,

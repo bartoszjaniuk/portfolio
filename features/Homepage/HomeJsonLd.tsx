@@ -61,9 +61,7 @@ export function HomeJsonLd({
       <JsonLd data={websiteStructuredData} />
       <JsonLd data={personStructuredData} />
       {faqStructuredData ? <JsonLd data={faqStructuredData} /> : null}
-      {servicesStructuredData ? (
-        <JsonLd data={servicesStructuredData} />
-      ) : null}
+      {servicesStructuredData ? <JsonLd data={servicesStructuredData} /> : null}
     </>
   );
 }

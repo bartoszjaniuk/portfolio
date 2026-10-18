@@ -4,15 +4,13 @@ import Link from "next/link";
 import { Logo } from "../../Logo";
 
 type BrandMarkProps = {
-  brandName: string;
   homeHref: string;
 };
 
-export function BrandMark({ brandName, homeHref }: BrandMarkProps) {
+export function BrandMark({ homeHref }: BrandMarkProps) {
   return (
     <Link href={homeHref} className="group flex items-center gap-2.5">
       <Logo />
-      {/* <SvgTextWithProgress brandName={brandName} /> */}
     </Link>
   );
 }

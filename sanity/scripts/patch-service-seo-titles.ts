@@ -157,9 +157,7 @@ async function main(): Promise<void> {
     ).values(),
   ]
 
-  const draftIds = before
-    .map((row) => row._id)
-    .filter((id) => id.startsWith('drafts.'))
+  const draftIds = before.map((row) => row._id).filter((id) => id.startsWith('drafts.'))
 
   console.log('\nPlanned mutations (patch.set seoTitle only):')
   for (const target of publishedTargets) {

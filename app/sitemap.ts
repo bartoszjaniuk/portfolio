@@ -79,7 +79,10 @@ function buildSitemap(
   const servicePages = serviceSlugs.flatMap(({ slug, updatedAt }) => {
     const languages = withXDefault(
       Object.fromEntries(
-        locales.map((locale) => [locale, `${base}${servicePath(locale, slug)}`]),
+        locales.map((locale) => [
+          locale,
+          `${base}${servicePath(locale, slug)}`,
+        ]),
       ),
       `${base}${servicePath(defaultLocale, slug)}`,
     );

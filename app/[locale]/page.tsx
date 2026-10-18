@@ -127,7 +127,8 @@ export default async function Home({
       {
         name,
         url: `${baseUrl}/${locale}/services/${slug}`,
-        description: service.seoDescription?.trim() || service.intro?.trim() || null,
+        description:
+          service.seoDescription?.trim() || service.intro?.trim() || null,
       },
     ];
   });

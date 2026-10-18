@@ -2,9 +2,7 @@ type ShaderFallbackProps = {
   variant?: "fixed" | "contained";
 };
 
-export const ShaderFallback = ({
-  variant = "fixed",
-}: ShaderFallbackProps) => {
+export const ShaderFallback = ({ variant = "fixed" }: ShaderFallbackProps) => {
   const positionClass =
     variant === "contained" ? "absolute inset-0" : "fixed inset-0";
 

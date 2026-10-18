@@ -38,9 +38,7 @@ function assertLocale(locale: string): Locale {
  * Fetches all services with field-level locale coalesce to EN.
  * Returns an empty array when none exist.
  */
-export async function getServices(
-  locale: Locale,
-): Promise<ServiceListItem[]> {
+export async function getServices(locale: Locale): Promise<ServiceListItem[]> {
   const safeLocale = assertLocale(locale);
 
   const rows = await client.fetch<ServiceListItem[] | null>(

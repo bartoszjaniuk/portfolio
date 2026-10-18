@@ -190,18 +190,20 @@ export async function getHomePage(
 }
 
 /** Map of homePage language → last Sanity update time (for sitemap). */
-export async function getHomePageUpdatedAtMap(): Promise<
-  Record<string, Date>
-> {
-  const rows = await client.fetch<
-    Array<{ language: string | null; _updatedAt: string }> | null
-  >(HOME_PAGE_UPDATED_AT_QUERY, {}, { next: { revalidate: REVALIDATE_SECONDS } });
+export async function getHomePageUpdatedAtMap(): Promise<Record<string, Date>> {
+  const rows = await client.fetch<Array<{
+    language: string | null;
+    _updatedAt: string;
+  }> | null>(
+    HOME_PAGE_UPDATED_AT_QUERY,
+    {},
+    { next: { revalidate: REVALIDATE_SECONDS } },
+  );
 
   return Object.fromEntries(
     (rows ?? [])
-      .filter(
-        (row): row is { language: string; _updatedAt: string } =>
-          Boolean(row.language && row._updatedAt),
+      .filter((row): row is { language: string; _updatedAt: string } =>
+        Boolean(row.language && row._updatedAt),
       )
       .map((row) => [row.language, new Date(row._updatedAt)]),
   );

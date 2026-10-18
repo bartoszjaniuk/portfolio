@@ -29,7 +29,7 @@ export const ContactMeSection = ({
   return (
     <Container
       id="contact"
-      className="bg-primary-surface text-primary-foreground"
+      className="bg-primary-surface text-primary-foreground scroll-mt-24 sm:scroll-mt-28"
     >
       <SectionHeader
         eyebrow={gotIdea.eyebrow ?? undefined}

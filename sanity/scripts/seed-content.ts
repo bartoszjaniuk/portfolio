@@ -370,7 +370,7 @@ export const homePageByLocale = {
         'I transform ideas into working digital products. I design and implement front-end applications, mobile apps, and back-end integrations.',
       descriptionAfter: "Currently, I'm focused on building accessible, human-centered products at",
       employer: {href: 'https://tsh.io/', label: 'The Software House'},
-      primaryCta: {href: '#projects', label: "Let's start a project together"},
+      primaryCta: {href: '#contact', label: "Let's start a project together"},
       scrollHint: scrollHintCopy.en,
     },
     about: {
@@ -447,7 +447,7 @@ export const homePageByLocale = {
         'Przekuwam pomysły w działające produkty cyfrowe. Projektuję i wdrażam frontend, aplikacje mobilne oraz integracje backendowe',
       descriptionAfter: "Currently, I'm focused on building accessible, human-centered products at",
       employer: {href: 'https://tsh.io/', label: 'The Software House'},
-      primaryCta: {href: '#projects', label: 'Rozpocznijmy wspólny projekt'},
+      primaryCta: {href: '#contact', label: 'Rozpocznijmy wspólny projekt'},
       scrollHint: scrollHintCopy.pl,
     },
     about: {
